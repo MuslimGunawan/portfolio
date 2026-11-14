@@ -47,79 +47,64 @@
     :host { all: initial; }
     .layer { position: fixed; inset: 0; z-index: 2147483646; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity .35s; }
     .layer.on { opacity: 1; }
-    .cursor { position: absolute; top: 0; left: 0; color: var(--c); will-change: transform; filter: drop-shadow(0 4px 8px rgb(0 0 0 / .55)); pointer-events: none; }
+    .cursor { position: absolute; top: 0; left: 0; color: var(--c); will-change: transform; filter: drop-shadow(0 3px 6px rgb(0 0 0 / .5)); pointer-events: none; }
     .cursor svg { display: block; transition: transform .1s; }
     .cursor.press svg { transform: scale(.72); }
     .cursor-tag {
       position: absolute;
-      top: 14px;
-      left: 14px;
+      top: 13px;
+      left: 13px;
       background: var(--c);
       color: #040814;
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.03em;
-      padding: 2px 7px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 1.5px 6.5px;
       border-radius: 999px;
       white-space: nowrap;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.55);
       user-select: none;
-      display: flex;
-      align-items: center;
-      gap: 4px;
     }
-    .cursor-tag .sub-status {
-      font-size: 8.5px;
-      font-weight: 600;
-      opacity: 0.85;
-      padding-left: 2px;
-      border-left: 1px solid rgba(0,0,0,0.3);
-    }
+    /* Clean, ultra-minimal Figma-style selection bounding box */
     .box {
       position: absolute;
       top: 0;
       left: 0;
       box-sizing: border-box;
-      border: 1.5px dashed var(--c);
-      background: color-mix(in srgb, var(--c) 14%, transparent);
-      box-shadow: 0 0 15px color-mix(in srgb, var(--c) 25%, transparent);
+      border: 1px solid var(--c);
+      background: transparent;
+      box-shadow: 0 0 8px color-mix(in srgb, var(--c) 20%, transparent);
       transition: opacity .25s;
+      pointer-events: none;
     }
     .box.out { opacity: 0; }
     .box i {
       position: absolute;
-      width: 7px;
-      height: 7px;
+      width: 5px;
+      height: 5px;
       background: #ffffff;
-      border: 1.5px solid var(--c);
+      border: 1px solid var(--c);
       border-radius: 1px;
     }
-    .box i.tl { top: -4px; left: -4px; }
-    .box i.tr { top: -4px; right: -4px; }
-    .box i.bl { bottom: -4px; left: -4px; }
-    .box i.br { bottom: -4px; right: -4px; }
+    .box i.tl { top: -3px; left: -3px; }
+    .box i.tr { top: -3px; right: -3px; }
+    .box i.bl { bottom: -3px; left: -3px; }
+    .box i.br { bottom: -3px; right: -3px; }
     .badge {
       position: absolute;
-      bottom: -24px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 1.5px 8px;
-      border-radius: 5px;
-      background: #090e17;
-      color: var(--c);
-      border: 1px solid var(--c);
-      font: 700 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+      bottom: -18px;
+      right: 0;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: var(--c);
+      color: #040814;
+      font: 700 9px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
       white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
-    .badge .dim { color: #ffffff; }
-    .badge .tag { color: var(--c); opacity: 0.9; }
-    .caret { position: absolute; top: 0; left: 0; width: 2px; background: var(--c); box-shadow: 0 0 10px var(--c); }
+    .caret { position: absolute; top: 0; left: 0; width: 2px; background: var(--c); box-shadow: 0 0 8px var(--c); }
     .bar { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 2147483647; display: flex; align-items: center; gap: 12px; padding: 5px 6px 5px 16px; background: rgb(13 19 42 / .92); border: 1px solid rgb(255 255 255 / .16); border-radius: 999px; color: #F6F1E7; font: 14px/1.5 system-ui, sans-serif; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; }
     .bar.on { opacity: 1; visibility: visible; }
     .bar button { min-height: 36px; padding: 0 14px; background: none; border: 1px solid rgb(255 255 255 / .35); border-radius: 999px; color: inherit; font: inherit; font-weight: 700; cursor: pointer; }
@@ -287,12 +272,12 @@
     }
 
     const AI_MODELS = [
-      { name: 'Gemini 2.5', color: '#38BDF8' },
-      { name: 'Claude 3.7', color: '#F59E0B' },
-      { name: 'GPT-4.5', color: '#10B981' },
+      { name: 'Claude 3.7 Sonnet', color: '#F59E0B' },
+      { name: 'Gemini 2.5 Pro', color: '#38BDF8' },
+      { name: 'o3-mini', color: '#10B981' },
       { name: 'DeepSeek R1', color: '#818CF8' },
-      { name: 'Llama 3.3', color: '#C084FC' },
-      { name: 'Qwen 2.5', color: '#2DD4BF' },
+      { name: 'GPT-5', color: '#0EA5E9' },
+      { name: 'Qwen 2.5 Max', color: '#2DD4BF' },
       { name: 'Grok 3', color: '#FB7185' },
     ]
 
@@ -378,19 +363,15 @@
       yield* travel(a, () => {
         const r = el.getBoundingClientRect()
         return [startX(r), r.top]
-      }, 0.22)
+      }, 0.28)
 
-      const tagName = el.tagName.toLowerCase()
-      const tagClass = el.className && typeof el.className === 'string' ? el.className.split(' ').filter((c) => !c.startsWith('sb-') && c.length > 2)[0] : ''
-      const labelTag = tagClass ? `.${tagClass.slice(0, 12)}` : `<${tagName}>`
-
-      if (a.tagEl) {
-        a.tagEl.innerHTML = `${a.name} <span class="sub-status">${labelTag}</span>`
-      }
-
+      const cs = getComputedStyle(el)
       const box = document.createElement('div')
       box.className = 'box'
       box.style.setProperty('--c', a.color)
+      if (cs.borderRadius) {
+        box.style.borderRadius = cs.borderRadius
+      }
 
       const iTL = document.createElement('i'); iTL.className = 'tl'
       const iTR = document.createElement('i'); iTR.className = 'tr'
@@ -405,7 +386,6 @@
 
       task.cleanup.push(() => {
         box.remove()
-        if (a.tagEl) a.tagEl.textContent = a.name
       })
 
       const place = (k) => {
@@ -415,23 +395,22 @@
         box.style.width = `${w}px`
         box.style.height = `${h}px`
         box.style.transform = `translate(${rtl ? r.right - w : r.left}px, ${r.top}px)`
-        badge.innerHTML = `<span class="dim">${Math.round(w)} × ${Math.round(h)}px</span> <span class="tag">${labelTag}</span>`
+        badge.textContent = `${Math.round(w)} × ${Math.round(h)}`
         a.x = startX(r) + (endX(r) - startX(r)) * k
         a.y = r.top + r.height * k
       }
       let t = 0
-      while (t < 0.32) {
+      while (t < 0.42) {
         t += (yield) * options.speed
-        place(ease(Math.min(1, t / 0.32)))
+        place(ease(Math.min(1, t / 0.42)))
       }
       el.classList.remove('sb-wait')
       box.classList.add('out')
       t = 0
-      while (t < 0.16) {
+      while (t < 0.18) {
         t += (yield) * options.speed
         place(1)
       }
-      if (a.tagEl) a.tagEl.textContent = a.name
     }
 
     // Typing is a moving clip over the real text. Nothing in the DOM changes, so joined
@@ -577,14 +556,13 @@
         const dt = Math.min((now - last) / 1000, 0.05)
         last = now
 
-        // Never make anyone wait: what scrolled past or waited too long simply appears.
+        // Biarkan proses pembangunan berjalan santai dan normal
         let waiting = 0
         for (const task of tasks) {
           if (task.state === 'queued') {
-            const r = task.el.getBoundingClientRect()
-            if (r.bottom < 0 || now - task.queuedAt > options.maxWait * 1000) finish(task)
+            if (now - task.queuedAt > options.maxWait * 2000) finish(task)
             else waiting++
-          } else if (task.state === 'active' && (!task.el.isConnected || task.el.getBoundingClientRect().bottom < -40)) {
+          } else if (task.state === 'active' && !task.el.isConnected) {
             finish(task)
           }
         }
@@ -651,15 +629,8 @@
           bar.classList.toggle('on', (waiting > 0 || now - lastActivity < 700) && built < tasks.length)
         }
 
-        // Cek jika user sudah mencapai ujung bawah halaman (terutama di HP/mobile)
-        const scrollBottom = window.innerHeight + window.scrollY
-        const docTotalHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
-        const isAtPageBottom = scrollBottom >= (docTotalHeight - 100)
-
-        // Jika sampai di ujung bawah dan kursor tidak sedang menjalankan script, selesaikan seluruh sisa tasks
-        if (isAtPageBottom && !agents.some((a) => a.script)) {
-          tasks.forEach(finish)
-        }
+        // Selesaikan secara alami tanpa buru-buru
+        const allDone = built >= tasks.length
 
         const idle = now - lastActivity
         const allDone = built >= tasks.length

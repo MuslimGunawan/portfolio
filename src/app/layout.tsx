@@ -66,10 +66,10 @@ export default function RootLayout({
         {/* Production-ready banna.js script */}
         <script
           src="/banna.js"
-          data-speed="1.2"
+          data-speed="0.85"
           data-agents="7"
           data-credit="false"
-          data-colors="#38bdf8,#f59e0b,#10b981,#818cf8,#c084fc,#2dd4bf,#fb7185"
+          data-colors="#f59e0b,#38bdf8,#10b981,#818cf8,#0ea5e9,#2dd4bf,#fb7185"
         ></script>
       </head>
       <body
