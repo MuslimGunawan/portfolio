@@ -1,34 +1,35 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const jakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "Muslim Gunawan | Software Engineer & Informatics Student",
+  title: "Muslim Gunawan // Software Engineer & Systems Builder",
   description:
-    "Portofolio resmi Muslim Gunawan (MusGun) - Mahasiswa Teknik Informatika Universitas Malikussaleh (UNIMAL) Semester 5. Spesialis Mobile (Flutter), Fullstack Web (Laravel & Next.js), serta Data Analytics.",
+    "Official portfolio of Muslim Gunawan (MusGun) - Informatics Engineering, Universitas Malikussaleh (UNIMAL). Specializing in high-performance Mobile Engineering (Flutter), Modern Full-Stack (Laravel, Next.js), and Spatial Intelligence.",
   keywords: [
     "Muslim Gunawan",
     "MusGun",
-    "Universitas Malikussaleh",
-    "UNIMAL",
+    "Software Engineer",
     "Flutter Developer",
     "Laravel Fullstack",
-    "Next.js Portfolio",
-    "Informatics Engineering",
+    "Next.js 16",
+    "Universitas Malikussaleh",
+    "UNIMAL",
+    "Portfolio",
   ],
   authors: [{ name: "Muslim Gunawan" }],
   icons: {
@@ -42,19 +43,37 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className="dark scroll-smooth">
+    <html lang="id" suppressHydrationWarning className="scroll-smooth">
       <head>
-        {/* banna.js script without data-once="session" so it builds on every refresh & replay */}
+        {/* Anti-flicker theme initialization script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('musgun_theme');
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  if (saved === 'dark' || (!saved && prefersDark) || !saved) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+        {/* Production-ready banna.js script */}
         <script
           src="/banna.js"
-          data-speed="1"
+          data-speed="1.2"
           data-agents="7"
           data-credit="false"
-          data-colors="#38bdf8,#818cf8,#34d399,#f472b6,#fbbf24,#a78bfa,#f87171"
+          data-colors="#38bdf8,#f59e0b,#10b981,#818cf8,#c084fc,#2dd4bf,#fb7185"
         ></script>
       </head>
       <body
-        className={`${jakartaSans.variable} ${jetbrainsMono.variable} font-sans min-h-screen bg-[#06080d] text-slate-100 antialiased selection:bg-cyan-500/30 selection:text-cyan-200`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} min-h-screen antialiased transition-colors duration-300 selection:bg-cyan-500/30 selection:text-cyan-400`}
       >
         {children}
       </body>

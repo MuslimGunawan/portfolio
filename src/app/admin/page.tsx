@@ -213,12 +213,12 @@ export default function AdminPage() {
             <Lock className="w-7 h-7" />
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 font-mono">
             <h1 className="text-xl font-bold tracking-tight text-white">
-              Admin Dashboard Portfolio
+              AUTHENTICATION REQUIRED
             </h1>
             <p className="text-xs text-slate-400">
-              Masukkan PIN Admin untuk mengelola portofolio Muslim Gunawan.
+              Enter security key to access deployment configuration.
             </p>
           </div>
 
@@ -227,23 +227,23 @@ export default function AdminPage() {
               type="password"
               value={pinInput}
               onChange={(e) => setPinInput(e.target.value)}
-              placeholder="Masukkan PIN (Default: NIM kamu)"
+              placeholder="Security Key / Passphrase"
               className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-center font-mono tracking-widest text-lg outline-none focus:border-cyan-400 transition-all text-white placeholder:text-slate-600"
               autoFocus
             />
 
             {pinError && (
-              <p className="text-xs text-rose-400 flex items-center justify-center gap-1.5">
+              <p className="text-xs text-rose-400 font-mono flex items-center justify-center gap-1.5">
                 <AlertCircle className="w-3.5 h-3.5" />
-                <span>PIN salah! Coba gunakan NIM kamu (240170036).</span>
+                <span>Access Denied: Invalid Security Key</span>
               </p>
             )}
 
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold text-sm hover:from-cyan-300 hover:to-blue-400 transition-all shadow-lg shadow-cyan-500/20"
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold text-sm hover:from-cyan-300 hover:to-blue-400 transition-all shadow-lg shadow-cyan-500/20 font-mono"
             >
-              Buka Dashboard
+              Verify Session
             </button>
           </form>
 

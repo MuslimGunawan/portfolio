@@ -21,6 +21,9 @@ import {
   CornerDownLeft,
   X,
   Lock,
+  Sun,
+  Moon,
+  Menu,
 } from "lucide-react";
 
 // Inline SVG GitHub Icon
@@ -66,6 +69,26 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState<string>("Semua");
   const [projectsList, setProjectsList] = useState<Project[]>(initialProjectsData as Project[]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Theme Sync on Mount
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains("dark");
+    setIsDarkTheme(isDark);
+  }, []);
+
+  const toggleTheme = () => {
+    const nextDark = !isDarkTheme;
+    setIsDarkTheme(nextDark);
+    if (nextDark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("musgun_theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("musgun_theme", "light");
+    }
+  };
 
   // Sync projects from /api/projects dynamically
   useEffect(() => {
@@ -89,9 +112,9 @@ export default function Home() {
       id: "init",
       output: (
         <div className="space-y-0.5 text-slate-400 font-mono text-xs">
-          <p className="text-white font-bold">Muslim OS [Version 24.1.0-UNIMAL Kernel 6.1]</p>
-          <p>© 2026 Muslim Gunawan. All rights reserved.</p>
-          <p className="text-slate-500 pt-1">Type &apos;help&apos; for a list of built-in commands or explore with ls, cat, cd, etc.</p>
+          <p className="text-cyan-400 font-bold">Muslim OS [Version 24.1.0-UNIMAL Kernel 6.1 x86_64]</p>
+          <p>© 2026 Muslim Gunawan. All systems online.</p>
+          <p className="text-slate-500 pt-0.5">Type &apos;help&apos; for system commands or explore filesystem with ls, cat, cd.</p>
         </div>
       ),
     },
@@ -120,7 +143,6 @@ export default function Home() {
 
     let responseContent: React.ReactNode;
 
-    // Command Parser untuk Linux, CMD, & PowerShell
     switch (mainCmd) {
       case "cls":
       case "clear":
@@ -132,19 +154,19 @@ export default function Home() {
         if (currentCwd === "~" || currentCwd === "") {
           responseContent = (
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono py-1">
-              <span className="text-cyan-400">📁 projects/</span>
-              <span className="text-emerald-400">📁 skills/</span>
+              <span className="text-cyan-400 font-bold">📁 projects/</span>
+              <span className="text-emerald-400 font-bold">📁 skills/</span>
               <span className="text-slate-200">📄 about.txt</span>
               <span className="text-slate-200">📄 unimal.md</span>
               <span className="text-slate-200">📄 contact.json</span>
-              <span className="text-amber-400">⚙️ system.cfg</span>
+              <span className="text-amber-400">⚙️ kernel.cfg</span>
             </div>
           );
         } else if (currentCwd.includes("projects")) {
           responseContent = (
             <div className="space-y-1 text-xs font-mono py-1 text-cyan-300">
               {projectsList.map((p) => (
-                <p key={p.id}>• {p.title} ({p.category})</p>
+                <p key={p.id}>• {p.title} [{p.category}]</p>
               ))}
             </div>
           );
@@ -158,7 +180,7 @@ export default function Home() {
             </div>
           );
         } else {
-          responseContent = <p className="text-xs text-slate-400">Directory is empty.</p>;
+          responseContent = <p className="text-xs text-slate-400 font-mono">Directory empty.</p>;
         }
         break;
 
@@ -195,34 +217,35 @@ export default function Home() {
           responseContent = (
             <div className="space-y-1 text-xs text-slate-300 font-mono">
               <p><strong className="text-white">Muslim Gunawan</strong> (NIM 240170036)</p>
-              <p>Asal: Kutacane, Aceh Tenggara | Mahasiswa Teknik Informatika UNIMAL Semester 5.</p>
-              <p>Fokus: Pengembangan aplikasi mobile multi-platform Flutter, arsitektur web modern full-stack Laravel &amp; Next.js, serta analisis geospasial.</p>
+              <p>Origin: Kutacane, Aceh Tenggara | Informatics Engineering UNIMAL (Semester 5).</p>
+              <p>Focus: High-performance Flutter Mobile Apps, scalable Fullstack Web (Laravel &amp; Next.js), and GIS Spatial Data Analytics.</p>
             </div>
           );
         } else if (arg === "unimal.md") {
           responseContent = (
             <div className="space-y-1 text-xs text-slate-300 font-mono">
               <p className="text-amber-300 font-bold"># Universitas Malikussaleh (UNIMAL)</p>
-              <p>• Fakultas Teknik • Jurusan Teknik Informatika</p>
-              <p>• Kampus Utama: Bukit Indah / Reuleut, Lhokseumawe, Aceh</p>
-              <p>• Status: Mahasiswa Aktif Semester 5</p>
+              <p>• Faculty of Engineering • Department of Informatics</p>
+              <p>• Campus: Bukit Indah / Reuleut, Lhokseumawe, Aceh</p>
+              <p>• Academic Status: Active Student (Semester 5)</p>
             </div>
           );
         } else if (arg === "contact.json") {
           responseContent = (
-            <pre className="text-xs text-cyan-300 font-mono bg-slate-950/60 p-2 rounded border border-slate-800">
+            <pre className="text-xs text-cyan-300 font-mono bg-slate-950/70 p-2.5 rounded border border-slate-800">
 {`{
   "name": "Muslim Gunawan",
-  "email": "muslimgunawan@example.com",
+  "email": "musgun.slyr@gmail.com",
   "github": "https://github.com/MuslimGunawan",
+  "institution": "Universitas Malikussaleh",
   "location": "Lhokseumawe, Aceh, Indonesia"
 }`}
             </pre>
           );
-        } else if (arg === "system.cfg") {
+        } else if (arg === "kernel.cfg") {
           responseContent = (
             <p className="text-xs text-slate-400 font-mono">
-              NODE_ENV=production | FRAMEWORK=Next.js 16 | TURBOPACK=enabled
+              BUILD_ENV=production | NEXT_VERSION=16.4.6 | TURBO=active
             </p>
           );
         } else if (!arg) {
@@ -238,14 +261,14 @@ export default function Home() {
 
       case "date":
       case "time":
-        responseContent = <p className="text-xs text-slate-300 font-mono">{new Date().toString()}</p>;
+        responseContent = <p className="text-xs text-slate-300 font-mono">{new Date().toUTCString()}</p>;
         break;
 
       case "ver":
       case "uname":
         responseContent = (
           <p className="text-xs text-slate-300 font-mono">
-            Linux unimal-station 6.6.14-musgun-x86_64 #1 SMP PREEMPT GNU/Linux (Next.js Runtime)
+            Linux unimal-station 6.6.14-musgun-x86_64 #1 SMP PREEMPT GNU/Linux
           </p>
         );
         break;
@@ -269,8 +292,8 @@ export default function Home() {
         responseContent = (
           <div className="space-y-0.5 text-xs text-sky-300 font-mono">
             <p>Flutter 3.27.x • channel stable</p>
-            <p>Tools • Dart 3.6.x • DevTools 2.40.x</p>
-            <p className="text-emerald-400">[✓] Flutter doctor: No issues found!</p>
+            <p>Framework • Dart 3.6.x • DevTools 2.40.x</p>
+            <p className="text-emerald-400">[✓] Flutter doctor: System architecture healthy.</p>
           </div>
         );
         break;
@@ -278,7 +301,7 @@ export default function Home() {
       case "php":
         responseContent = (
           <p className="text-xs text-indigo-300 font-mono">
-            PHP 8.5.0 (cli) (built: 2026) with Zend OPcache &amp; Laravel 12 Support
+            PHP 8.5.0 (cli) (built: 2026) with Zend OPcache &amp; Laravel 12 Engine
           </p>
         );
         break;
@@ -287,7 +310,7 @@ export default function Home() {
       case "python3":
         responseContent = (
           <p className="text-xs text-amber-300 font-mono">
-            Python 3.13.0 (main) [Clang / GCC] on linux • QGIS &amp; Pandas ready
+            Python 3.13.0 (main) [GCC / Clang] • Spatial GIS &amp; Pandas toolchain
           </p>
         );
         break;
@@ -319,7 +342,7 @@ export default function Home() {
       case "sudo":
         responseContent = (
           <p className="text-xs text-rose-400 font-mono">
-            [sudo] musgun is already in the sudoers file. You hold root guest privileges.
+            [sudo] musgun is in the sudoers file. Root guest session active.
           </p>
         );
         break;
@@ -328,16 +351,16 @@ export default function Home() {
       case "man":
         responseContent = (
           <div className="space-y-1.5 text-xs font-mono">
-            <p className="text-cyan-300 font-bold">Standard Shell Commands:</p>
+            <p className="text-cyan-400 font-bold">Supported Commands:</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-1 text-slate-300">
-              <p><span className="text-amber-300 font-bold">ls / dir</span> - list files</p>
-              <p><span className="text-amber-300 font-bold">cd &lt;dir&gt;</span> - change dir</p>
-              <p><span className="text-amber-300 font-bold">cat &lt;file&gt;</span> - read file</p>
-              <p><span className="text-amber-300 font-bold">cls / clear</span> - clear screen</p>
-              <p><span className="text-amber-300 font-bold">pwd</span> - current path</p>
-              <p><span className="text-amber-300 font-bold">whoami</span> - user identity</p>
-              <p><span className="text-amber-300 font-bold">ping</span> - network probe</p>
-              <p><span className="text-amber-300 font-bold">flutter</span> - check tools</p>
+              <p><span className="text-amber-400 font-bold">ls / dir</span> - list files</p>
+              <p><span className="text-amber-400 font-bold">cd &lt;dir&gt;</span> - navigate</p>
+              <p><span className="text-amber-400 font-bold">cat &lt;file&gt;</span> - inspect</p>
+              <p><span className="text-amber-400 font-bold">cls / clear</span> - clear</p>
+              <p><span className="text-amber-400 font-bold">pwd</span> - print path</p>
+              <p><span className="text-amber-400 font-bold">whoami</span> - user id</p>
+              <p><span className="text-amber-400 font-bold">ping</span> - network</p>
+              <p><span className="text-amber-400 font-bold">flutter</span> - check sdk</p>
             </div>
           </div>
         );
@@ -346,7 +369,7 @@ export default function Home() {
       default:
         responseContent = (
           <p className="text-xs text-rose-400 font-mono">
-            bash: {mainCmd}: command not found. Type &apos;help&apos; to view valid commands.
+            bash: {mainCmd}: command not found. Type &apos;help&apos; for available commands.
           </p>
         );
     }
@@ -399,99 +422,160 @@ export default function Home() {
   }, [terminalLogs]);
 
   return (
-    <div className="relative min-h-screen bg-[#06080d] bg-grid-pattern text-slate-100 overflow-x-hidden">
+    <div className="relative min-h-screen bg-grid-pattern overflow-x-hidden font-sans">
       {/* Background radial glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[360px] bg-gradient-to-b from-cyan-500/15 via-blue-600/10 to-transparent blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-gradient-to-b from-cyan-500/15 via-blue-600/10 to-transparent blur-[120px] pointer-events-none" />
 
-      {/* MINIMALIST TOP BAR NAVIGATION (Bersih & Elegan) */}
+      {/* MINIMALIST TOP BAR NAVIGATION (Clean & Hacker-Grade) */}
       <header
         data-banna-skip
-        className="sticky top-0 z-40 backdrop-blur-md bg-[#06080d]/85 border-b border-slate-800/80 px-6 py-4 transition-all"
+        className="sticky top-0 z-40 backdrop-blur-md bg-[var(--header-bg)] border-b border-[var(--card-border)] px-6 py-3.5 transition-colors"
       >
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Logo / Brand Name Bersih */}
           <a href="#" className="flex flex-col group">
-            <span className="font-extrabold text-lg sm:text-xl tracking-tight text-white group-hover:text-cyan-400 transition-colors">
+            <span className="font-extrabold text-lg sm:text-xl tracking-tight text-[var(--foreground)] group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors font-mono">
               Muslim Gunawan
             </span>
-            <span className="text-[11px] font-mono text-slate-400 tracking-wider">
-              @musgun • UNIMAL
+            <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 tracking-wider">
+              @musgun // UNIMAL
             </span>
           </a>
 
-          {/* Navigasi Utama */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-            <a href="#about" className="hover:text-cyan-400 transition-colors">
-              Tentang
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-300 font-mono">
+            <a href="#about" className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors">
+              // tentang
             </a>
-            <a href="#stack" className="hover:text-cyan-400 transition-colors">
-              Tech Stack
+            <a href="#stack" className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors">
+              // tech_stack
             </a>
-            <a href="#projects" className="hover:text-cyan-400 transition-colors">
-              Proyek
+            <a href="#projects" className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors">
+              // proyek
             </a>
-            <a href="#terminal" className="hover:text-cyan-400 transition-colors">
-              Terminal
+            <a href="#terminal" className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors">
+              // terminal
             </a>
-            <a href="#contact" className="hover:text-cyan-400 transition-colors">
-              Kontak
+            <a href="#contact" className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors">
+              // kontak
             </a>
           </nav>
 
-          {/* Minimalist Right Action */}
-          <div className="flex items-center gap-3">
+          {/* Right Action: Theme Switcher + Admin Lock + CTA */}
+          <div className="flex items-center gap-2.5">
+            {/* Theme Toggle (Dark / Light) */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-800 transition-all text-xs"
+              title={isDarkTheme ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              aria-label="Toggle Theme"
+            >
+              {isDarkTheme ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
+            </button>
+
+            {/* Admin Dashboard Lock Link */}
             <Link
               href="/admin"
-              className="p-2 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-slate-900 border border-transparent hover:border-slate-800 transition-all text-xs"
-              title="Admin Dashboard (CRUD Proyek)"
+              className="p-2 rounded-xl text-slate-500 hover:text-cyan-400 hover:bg-slate-200 dark:hover:bg-slate-900 border border-transparent hover:border-slate-300 dark:hover:border-slate-800 transition-all text-xs"
+              title="Admin Terminal"
             >
-              <Lock className="w-3.5 h-3.5" />
+              <Lock className="w-4 h-4" />
             </Link>
 
             <a
               href="#contact"
-              className="px-4 py-1.5 rounded-full text-xs font-bold bg-cyan-400 hover:bg-cyan-300 text-slate-950 transition-all shadow-md shadow-cyan-500/20"
+              className="hidden sm:inline-flex px-4 py-1.5 rounded-full text-xs font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-all shadow-md shadow-cyan-500/20 font-mono"
             >
               Hubungi
             </a>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-xl border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+              aria-label="Toggle Mobile Menu"
+            >
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden pt-4 pb-2 border-t border-[var(--card-border)] mt-3 space-y-2 text-sm font-mono">
+            <a
+              href="#about"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
+            >
+              // tentang
+            </a>
+            <a
+              href="#stack"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
+            >
+              // tech_stack
+            </a>
+            <a
+              href="#projects"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
+            >
+              // proyek
+            </a>
+            <a
+              href="#terminal"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
+            >
+              // terminal
+            </a>
+            <a
+              href="#contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
+            >
+              // kontak
+            </a>
+          </div>
+        )}
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 pt-12 pb-24 space-y-24">
+      <main className="max-w-6xl mx-auto px-6 pt-10 pb-24 space-y-24">
         {/* HERO SECTION */}
         <section id="hero" className="relative pt-6 pb-4">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Kiri: Teks & Headline */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-700/70 text-slate-300 text-xs font-medium">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Teknik Informatika • Universitas Malikussaleh</span>
-                <span className="text-slate-500">|</span>
-                <span className="text-cyan-400 font-mono font-bold">Semester 5</span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-200/80 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700/70 text-slate-700 dark:text-slate-300 text-xs font-mono">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Teknik Informatika // Universitas Malikussaleh</span>
+                <span className="text-slate-400">|</span>
+                <span className="text-cyan-600 dark:text-cyan-400 font-bold">Semester 5</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
-                Merancang Aplikasi{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[var(--foreground)] leading-[1.12]">
+                Engineering Scalable{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-600">
                   Mobile &amp; Fullstack
                 </span>{" "}
-                yang Tangguh &amp; Elegan.
+                Architectures.
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">
-                Halo! Saya <strong className="text-white">Muslim Gunawan</strong> (MusGun). 
-                Mahasiswa Teknik Informatika UNIMAL yang aktif membangun aplikasi mobile performa tinggi dengan{" "}
-                <strong className="text-cyan-300">Flutter</strong>, sistem web terukur dengan{" "}
-                <strong className="text-sky-300">Laravel &amp; Next.js</strong>, serta visualisasi data geospasial.
+              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
+                Halo, saya <strong className="text-[var(--foreground)]">Muslim Gunawan</strong> (MusGun). 
+                Mahasiswa Teknik Informatika UNIMAL yang berdedikasi membangun aplikasi mobile performa tinggi dengan{" "}
+                <strong className="text-cyan-600 dark:text-cyan-300 font-mono">Flutter</strong>, sistem web terukur dengan{" "}
+                <strong className="text-blue-600 dark:text-sky-300 font-mono">Laravel &amp; Next.js</strong>, serta visualisasi analitik geospasial.
               </p>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <a
                   href="#projects"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold text-sm hover:from-cyan-300 hover:to-blue-400 transition-all shadow-lg shadow-cyan-500/25"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-sm hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/25 font-mono"
                 >
-                  <span>Jelajahi Portofolio</span>
+                  <span>// JELAJAHI_PROYEK</span>
                   <ArrowRight className="w-4 h-4" />
                 </a>
 
@@ -499,34 +583,34 @@ export default function Home() {
                   href="https://github.com/MuslimGunawan"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 text-slate-200 font-medium text-sm transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-200 dark:bg-slate-900/80 hover:bg-slate-300 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700/80 text-slate-800 dark:text-slate-200 font-medium text-sm transition-all font-mono"
                 >
-                  <GithubIcon className="w-4 h-4 text-slate-300" />
+                  <GithubIcon className="w-4 h-4" />
                   <span>GitHub</span>
                 </a>
 
                 <a
                   href="#terminal"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 text-slate-200 font-medium text-sm transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-200 dark:bg-slate-900/80 hover:bg-slate-300 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700/80 text-slate-800 dark:text-slate-200 font-medium text-sm transition-all font-mono"
                 >
-                  <TerminalIcon className="w-4 h-4 text-cyan-400" />
+                  <TerminalIcon className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                   <span>Terminal</span>
                 </a>
               </div>
 
               {/* Status info bar */}
-              <div className="flex flex-wrap items-center gap-6 pt-4 text-xs text-slate-400 border-t border-slate-800/80">
+              <div className="flex flex-wrap items-center gap-6 pt-4 text-xs text-slate-500 dark:text-slate-400 border-t border-[var(--card-border)] font-mono">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-3.5 h-3.5 text-rose-400" />
-                  <span>Lhokseumawe / Aceh, Indonesia</span>
+                  <MapPin className="w-3.5 h-3.5 text-rose-500" />
+                  <span>Lhokseumawe / Aceh, ID</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <GraduationCap className="w-3.5 h-3.5 text-amber-400" />
+                  <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
                   <span>NIM: 240170036</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Tersedia untuk Magang &amp; Project</span>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>Open for Opportunities</span>
                 </div>
               </div>
             </div>
@@ -534,11 +618,11 @@ export default function Home() {
             {/* Kanan: Foto Profil & Kartu Identitas */}
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative group w-full max-w-[340px]">
-                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 opacity-40 blur-xl group-hover:opacity-60 transition duration-500" />
+                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 opacity-30 dark:opacity-40 blur-xl group-hover:opacity-60 transition duration-500" />
 
-                <div className="relative rounded-3xl p-4 glass-card border border-slate-700/80 shadow-2xl space-y-4">
+                <div className="relative rounded-3xl p-4 glass-card shadow-2xl space-y-4">
                   {/* Foto Utama */}
-                  <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden border border-slate-700/60 bg-slate-900">
+                  <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-700/60 bg-slate-100 dark:bg-slate-900">
                     <Image
                       src="/pp.jpeg"
                       alt="Muslim Gunawan"
@@ -562,23 +646,23 @@ export default function Home() {
                         <p className="text-xs font-bold text-white truncate">
                           Universitas Malikussaleh
                         </p>
-                        <p className="text-[10px] text-cyan-300 truncate">
-                          Fakultas Teknik • Teknik Informatika
+                        <p className="text-[10px] text-cyan-300 truncate font-mono">
+                          Fakultas Teknik // Teknik Informatika
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Ringkasan Profil Card */}
-                  <div className="space-y-1.5 px-1">
+                  <div className="space-y-1.5 px-1 font-mono">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-white">Muslim Gunawan</span>
-                      <span className="px-2 py-0.5 text-[10px] rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800/60 font-mono">
-                        NIM 240170036
+                      <span className="text-sm font-bold text-[var(--foreground)]">Muslim Gunawan</span>
+                      <span className="px-2 py-0.5 text-[10px] rounded-full bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800/60 font-bold">
+                        240170036
                       </span>
                     </div>
-                    <p className="text-xs text-slate-400">
-                      Mobile &amp; Fullstack Web Developer enthusiast yang berdedikasi membangun solusi perangkat lunak berdampak nyata.
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-sans">
+                      Software engineering practitioner focused on high-efficiency mobile apps &amp; modern web distributed systems.
                     </p>
                   </div>
                 </div>
@@ -589,63 +673,65 @@ export default function Home() {
 
         {/* BENTO GRID: TENTANG & FOKUS BIDANG */}
         <section id="about" className="space-y-6">
-          <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white flex items-center gap-2.5">
-              <Layers className="w-6 h-6 text-cyan-400" />
-              <span>Bidang Keahlian &amp; Fondasi Akademik</span>
+          <div className="space-y-1">
+            <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
+              // 01. CAPABILITIES
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--foreground)] flex items-center gap-2.5 font-mono">
+              <Layers className="w-6 h-6 text-cyan-500" />
+              <span>Core Domains &amp; Foundation</span>
             </h2>
-            <p className="text-sm text-slate-400 max-w-2xl">
-              Kombinasi kompetensi teknis dari bangku kuliah dan eksplorasi intensif di ekosistem software engineering modern.
+            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
+              Kompetensi teknik terintegrasi dari kurikulum Teknik Informatika UNIMAL dan praktik rekayasa sistem modern.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {/* Bento Card 1: Mobile Development */}
             <div className="glass-card rounded-2xl p-6 relative overflow-hidden group">
-              <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-5 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-500 dark:text-cyan-400 mb-5 group-hover:scale-110 transition-transform">
                 <Smartphone className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Pemrograman Mobile (Flutter)</h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Pengembangan aplikasi multi-platform (Android, Web) menggunakan Flutter dan Dart dengan fokus pada arsitektur bersih, UI responsif, state management, dan interaksi yang halus.
+              <h3 className="text-lg font-bold text-[var(--foreground)] mb-2 font-mono">Mobile App Engineering</h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                Pengembangan aplikasi multi-platform (Android, Web) menggunakan Flutter dan Dart dengan arsitektur bersih, 60fps UI, state management, dan interaksi native yang halus.
               </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-cyan-300 border border-slate-700">Flutter</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-cyan-300 border border-slate-700">Dart</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-cyan-300 border border-slate-700">Responsive UI</span>
+              <div className="mt-4 flex flex-wrap gap-1.5 font-mono">
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-700">Flutter</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-700">Dart</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-700">Riverpod</span>
               </div>
             </div>
 
             {/* Bento Card 2: Fullstack Web */}
             <div className="glass-card rounded-2xl p-6 relative overflow-hidden group">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-5 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-500 dark:text-blue-400 mb-5 group-hover:scale-110 transition-transform">
                 <Globe className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Fullstack Web Engineering</h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Membangun sistem web dinamis dan backend API yang tangguh menggunakan PHP 8.5 &amp; Laravel, serta frontend modern berbasis React, TypeScript, dan Next.js.
+              <h3 className="text-lg font-bold text-[var(--foreground)] mb-2 font-mono">Fullstack Web Systems</h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                Merancang backend API yang aman &amp; tangguh menggunakan PHP 8.5 &amp; Laravel, serta antarmuka web modern reaktif berbasis Next.js 16, TypeScript, dan Tailwind CSS.
               </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-blue-300 border border-slate-700">PHP 8.5</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-blue-300 border border-slate-700">Laravel</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-blue-300 border border-slate-700">Next.js</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-blue-300 border border-slate-700">MySQL</span>
+              <div className="mt-4 flex flex-wrap gap-1.5 font-mono">
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-blue-700 dark:text-blue-300 border border-slate-300 dark:border-slate-700">Laravel</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-blue-700 dark:text-blue-300 border border-slate-300 dark:border-slate-700">Next.js 16</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-blue-700 dark:text-blue-300 border border-slate-300 dark:border-slate-700">MySQL</span>
               </div>
             </div>
 
             {/* Bento Card 3: Data & Spatial */}
             <div className="glass-card rounded-2xl p-6 relative overflow-hidden group">
-              <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-5 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-500 dark:text-purple-400 mb-5 group-hover:scale-110 transition-transform">
                 <Database className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Data Analytics &amp; GIS Spasial</h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Eksplorasi data dan visualisasi statistik menggunakan R &amp; Python, serta analisis sistem informasi geografis (GIS) untuk pemetaan wilayah dengan QGIS.
+              <h3 className="text-lg font-bold text-[var(--foreground)] mb-2 font-mono">Data Science &amp; GIS</h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                Eksplorasi data spasial, pemodelan statistik dengan R &amp; Python, serta analisis sistem informasi geografis (GIS) untuk digitasi batas wilayah dan infrastruktur dengan QGIS.
               </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-purple-300 border border-slate-700">R Language</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-purple-300 border border-slate-700">Python</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-purple-300 border border-slate-700">QGIS</span>
+              <div className="mt-4 flex flex-wrap gap-1.5 font-mono">
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-slate-300 dark:border-slate-700">Python</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-slate-300 dark:border-slate-700">R Language</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-slate-300 dark:border-slate-700">QGIS</span>
               </div>
             </div>
           </div>
@@ -653,43 +739,46 @@ export default function Home() {
 
         {/* TECH STACK DETAIL SECTION */}
         <section id="stack" className="space-y-6">
-          <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white flex items-center gap-2.5">
-              <Cpu className="w-6 h-6 text-cyan-400" />
-              <span>Teknologi &amp; Tooling yang Digunakan</span>
+          <div className="space-y-1">
+            <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
+              // 02. TOOLCHAIN_MATRIX
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--foreground)] flex items-center gap-2.5 font-mono">
+              <Cpu className="w-6 h-6 text-cyan-500" />
+              <span>Technology Toolchain</span>
             </h2>
-            <p className="text-sm text-slate-400">
-              Tech stack yang saya gunakan sehari-hari dalam perkuliahan maupun pengembangan proyek aplikasi mandiri.
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              Perangkat dan bahasa pemrograman yang digunakan dalam implementasi solusi sistem.
             </p>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
-              { name: "Flutter", role: "Mobile Framework", level: "Core", color: "from-sky-500 to-cyan-500" },
-              { name: "Dart", role: "Programming Language", level: "Core", color: "from-blue-600 to-cyan-500" },
-              { name: "Laravel", role: "Backend Framework", level: "Core", color: "from-red-600 to-rose-500" },
-              { name: "PHP 8.5", role: "Server-side Language", level: "Core", color: "from-indigo-600 to-purple-600" },
-              { name: "Next.js", role: "Modern React Framework", level: "Core", color: "from-slate-400 to-slate-200" },
-              { name: "TypeScript", role: "Type-safe JavaScript", level: "Proficient", color: "from-blue-500 to-sky-400" },
-              { name: "Python", role: "Scripting & Data Analysis", level: "Proficient", color: "from-amber-400 to-yellow-600" },
-              { name: "R Language", role: "Data Visualization & Stats", level: "Academic", color: "from-blue-500 to-indigo-500" },
-              { name: "MySQL / PostgreSQL", role: "Relational Database", level: "Core", color: "from-cyan-600 to-blue-700" },
-              { name: "Tailwind CSS v4", role: "Modern Utility Styling", level: "Core", color: "from-cyan-400 to-teal-400" },
-              { name: "QGIS", role: "Geographic Information System", level: "Academic", color: "from-emerald-500 to-green-600" },
-              { name: "Git & GitHub", role: "Version Control System", level: "Core", color: "from-orange-500 to-rose-600" },
+              { name: "Flutter", role: "Mobile Framework", level: "Production", color: "from-sky-500 to-cyan-500" },
+              { name: "Dart", role: "Object-oriented Language", level: "Advanced", color: "from-blue-600 to-cyan-500" },
+              { name: "Laravel", role: "Backend Framework", level: "Production", color: "from-red-600 to-rose-500" },
+              { name: "PHP 8.5", role: "Server-side Language", level: "Advanced", color: "from-indigo-600 to-purple-600" },
+              { name: "Next.js 16", role: "React Server Framework", level: "Production", color: "from-slate-400 to-slate-200" },
+              { name: "TypeScript", role: "Strict Type System", level: "Advanced", color: "from-blue-500 to-sky-400" },
+              { name: "Python", role: "Scripting & Spatial ETL", level: "Proficient", color: "from-amber-400 to-yellow-600" },
+              { name: "R Language", role: "Statistical Modeling", level: "Academic", color: "from-blue-500 to-indigo-500" },
+              { name: "MySQL / Postgres", role: "Relational Storage", level: "Production", color: "from-cyan-600 to-blue-700" },
+              { name: "Tailwind CSS v4", role: "Utility Design Engine", level: "Production", color: "from-cyan-400 to-teal-400" },
+              { name: "QGIS", role: "Spatial Geospatial SIG", level: "Academic", color: "from-emerald-500 to-green-600" },
+              { name: "Git & GitHub", role: "CI/CD & Version Control", level: "Production", color: "from-orange-500 to-rose-600" },
             ].map((tech) => (
               <div
                 key={tech.name}
-                className="glass-card rounded-xl p-4 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between"
+                className="glass-card rounded-xl p-4 flex flex-col justify-between group"
               >
                 <div>
                   <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${tech.color} mb-3`} />
-                  <p className="font-bold text-sm text-white">{tech.name}</p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">{tech.role}</p>
+                  <p className="font-bold text-sm text-[var(--foreground)] font-mono">{tech.name}</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{tech.role}</p>
                 </div>
-                <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] text-slate-500 font-mono">
-                  <span>Level</span>
-                  <span className="text-slate-300">{tech.level}</span>
+                <div className="mt-3 pt-2 border-t border-[var(--card-border)] flex items-center justify-between text-[10px] text-slate-500 font-mono">
+                  <span>TIER</span>
+                  <span className="text-cyan-600 dark:text-cyan-400 font-bold">{tech.level}</span>
                 </div>
               </div>
             ))}
@@ -699,26 +788,29 @@ export default function Home() {
         {/* CLICKABLE FEATURED PROJECTS SHOWCASE */}
         <section id="projects" className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div className="space-y-2">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white flex items-center gap-2.5">
-                <Code2 className="w-6 h-6 text-cyan-400" />
-                <span>Featured Projects</span>
+            <div className="space-y-1">
+              <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
+                // 03. REPOSITORIES
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--foreground)] flex items-center gap-2.5 font-mono">
+                <Code2 className="w-6 h-6 text-cyan-500" />
+                <span>Featured Systems</span>
               </h2>
-              <p className="text-sm text-slate-400">
-                Klik kartu proyek untuk melihat detail fitur, arsitektur, dan tautan kode.
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Pilih kartu proyek untuk membaca detail arsitektur, fitur, dan dokumentasi teknis.
               </p>
             </div>
 
             {/* Filter buttons */}
-            <div className="flex flex-wrap gap-1.5 p-1 rounded-xl bg-slate-900 border border-slate-800">
+            <div className="flex flex-wrap gap-1.5 p-1 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 font-mono">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
                   className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
                     activeCategory === cat
-                      ? "bg-cyan-400 text-slate-950 font-semibold shadow-sm"
-                      : "text-slate-400 hover:text-white"
+                      ? "bg-cyan-500 text-slate-950 font-bold shadow-sm"
+                      : "text-slate-600 dark:text-slate-400 hover:text-[var(--foreground)]"
                   }`}
                 >
                   {cat}
@@ -732,34 +824,34 @@ export default function Home() {
               <div
                 key={project.id}
                 onClick={() => setSelectedProject(project)}
-                className="glass-card rounded-2xl p-6 border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-900/70 cursor-pointer transition-all flex flex-col justify-between group space-y-4 relative"
+                className="glass-card rounded-2xl p-6 cursor-pointer flex flex-col justify-between group space-y-4 relative"
               >
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-800/90 text-cyan-300 border border-slate-700">
+                  <div className="flex items-center justify-between font-mono">
+                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-200 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-700">
                       {project.category}
                     </span>
-                    <span className="text-xs text-slate-500 font-mono">{project.role}</span>
+                    <span className="text-xs text-slate-500">{project.role}</span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-[var(--foreground)] group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors flex items-center justify-between font-mono">
                     <span>{project.title}</span>
-                    <span className="text-xs text-cyan-400 font-normal flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span>Detail</span>
+                    <span className="text-xs text-cyan-600 dark:text-cyan-400 font-normal flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span>Inspect</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </span>
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     {project.shortDescription}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-800/80 flex flex-wrap gap-1.5">
+                <div className="pt-4 border-t border-[var(--card-border)] flex flex-wrap gap-1.5 font-mono">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-900 text-slate-400 border border-slate-800"
+                      className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800"
                     >
                       #{tag}
                     </span>
@@ -770,34 +862,34 @@ export default function Home() {
           </div>
         </section>
 
-        {/* MODAL DETAIL PROYEK YANG DAPAT DI-KLIK */}
+        {/* MODAL DETAIL PROYEK INTERAKTIF */}
         {selectedProject && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
             <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6 my-8 relative">
               <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-800">
                 <div className="space-y-1">
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-800 text-cyan-300 border border-slate-700">
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-800 text-cyan-300 border border-slate-700 font-mono">
                     {selectedProject.category}
                   </span>
-                  <h2 className="text-2xl font-bold text-white pt-1">
+                  <h2 className="text-2xl font-bold text-white pt-1 font-mono">
                     {selectedProject.title}
                   </h2>
-                  <p className="text-xs text-slate-400 font-mono">Peran: {selectedProject.role}</p>
+                  <p className="text-xs text-slate-400 font-mono">// Role: {selectedProject.role}</p>
                 </div>
 
                 <button
                   onClick={() => setSelectedProject(null)}
                   className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white transition-all"
-                  title="Tutup"
+                  title="Close"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
                 <div>
                   <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5 font-mono">
-                    Tentang Proyek
+                    // OVERVIEW
                   </h4>
                   <p>{selectedProject.fullDescription || selectedProject.shortDescription}</p>
                 </div>
@@ -805,9 +897,9 @@ export default function Home() {
                 {selectedProject.features && selectedProject.features.length > 0 && (
                   <div>
                     <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 font-mono">
-                      Fitur &amp; Arsitektur Kunci
+                      // KEY_SPECIFICATIONS
                     </h4>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-1.5 font-mono text-xs">
                       {selectedProject.features.map((feat, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
@@ -820,7 +912,7 @@ export default function Home() {
 
                 <div>
                   <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 font-mono">
-                    Teknologi yang Digunakan
+                    // STACK_DEPENDENCIES
                   </h4>
                   <div className="flex flex-wrap gap-1.5">
                     {selectedProject.tags.map((tag) => (
@@ -835,7 +927,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
+              <div className="pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 font-mono">
                 <div className="flex items-center gap-2">
                   {selectedProject.githubUrl && (
                     <a
@@ -845,7 +937,7 @@ export default function Home() {
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs transition-all border border-slate-700"
                     >
                       <GithubIcon className="w-4 h-4" />
-                      <span>Lihat Kode di GitHub</span>
+                      <span>View Source</span>
                     </a>
                   )}
                   {selectedProject.demoUrl && (
@@ -856,7 +948,7 @@ export default function Home() {
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-xs transition-all shadow-md shadow-cyan-500/20"
                     >
                       <ExternalLink className="w-4 h-4" />
-                      <span>Buka Live Demo</span>
+                      <span>Launch App</span>
                     </a>
                   )}
                 </div>
@@ -865,31 +957,34 @@ export default function Home() {
                   onClick={() => setSelectedProject(null)}
                   className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs"
                 >
-                  Tutup Dialog
+                  Dismiss
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {/* REAL AUTHENTIC TERMINAL SECTION (Tanpa Clue, Dukung cls/dir/ls/cat) */}
+        {/* HACKER TERMINAL SECTION */}
         <section id="terminal" className="space-y-4">
           <div className="space-y-1">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white flex items-center gap-2.5">
-              <TerminalIcon className="w-6 h-6 text-cyan-400" />
+            <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
+              // 04. SHELL_ENVIRONMENT
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--foreground)] flex items-center gap-2.5 font-mono">
+              <TerminalIcon className="w-6 h-6 text-cyan-500" />
               <span>Interactive Developer Terminal</span>
             </h2>
-            <p className="text-sm text-slate-400">
-              Konsol command-line interaktif dengan dukungan perintah standar (ls, dir, cat, cd, cls, flutter, git).
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              Direct command-line session running on virtual POSIX emulator.
             </p>
           </div>
 
           <div
             onClick={() => inputRef.current?.focus()}
-            className="glass-card rounded-2xl border border-slate-800 shadow-2xl overflow-hidden font-mono text-xs sm:text-sm transition-all focus-within:border-cyan-500/50"
+            className="rounded-2xl border border-[var(--terminal-border)] bg-[var(--terminal-bg)] shadow-2xl overflow-hidden font-mono text-xs sm:text-sm transition-all focus-within:border-cyan-500/60"
           >
-            {/* Terminal Header Bersih */}
-            <div className="flex items-center justify-between px-4 py-3 bg-slate-950/80 border-b border-slate-800 text-slate-400 select-none">
+            {/* Terminal Header */}
+            <div className="flex items-center justify-between px-4 py-3 bg-black/40 border-b border-white/5 text-slate-400 select-none">
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
                 <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
@@ -898,7 +993,7 @@ export default function Home() {
                   <span>musgun@unimal: {currentCwd}</span>
                 </span>
               </div>
-              <span className="text-[11px] text-slate-500 hidden sm:inline">bash / zsh session</span>
+              <span className="text-[11px] text-slate-500 hidden sm:inline">bash 5.2-release</span>
             </div>
 
             {/* Terminal Output Logs */}
@@ -914,13 +1009,13 @@ export default function Home() {
                       <span>{log.command}</span>
                     </div>
                   )}
-                  <div className="pl-3 border-l-2 border-slate-800/80">{log.output}</div>
+                  <div className="pl-3 border-l-2 border-white/10">{log.output}</div>
                 </div>
               ))}
             </div>
 
             {/* Terminal Input Line */}
-            <div className="p-4 bg-slate-950/70 border-t border-slate-800/80 flex items-center gap-2">
+            <div className="p-4 bg-black/50 border-t border-white/5 flex items-center gap-2">
               <span className="text-emerald-400 font-bold whitespace-nowrap">
                 musgun@unimal:{currentCwd}$
               </span>
@@ -930,7 +1025,7 @@ export default function Home() {
                 value={terminalInput}
                 onChange={(e) => setTerminalInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="type a command (e.g. ls, cat about.txt, flutter, cls)..."
+                placeholder="type command (e.g. ls, cat about.txt, flutter, cls)..."
                 className="flex-1 bg-transparent text-white outline-none font-mono text-xs sm:text-sm placeholder:text-slate-600"
                 autoComplete="off"
                 spellCheck={false}
@@ -940,8 +1035,8 @@ export default function Home() {
                   handleCommand(terminalInput);
                   setTerminalInput("");
                 }}
-                className="px-2 py-1 rounded bg-slate-800 hover:bg-cyan-400 hover:text-black text-slate-300 transition-all"
-                title="Execute command"
+                className="px-2 py-1 rounded bg-slate-800 hover:bg-cyan-500 hover:text-black text-slate-300 transition-all"
+                title="Execute"
               >
                 <CornerDownLeft className="w-3.5 h-3.5" />
               </button>
@@ -950,38 +1045,41 @@ export default function Home() {
         </section>
 
         {/* KONTAK & FOOTER BERSIH */}
-        <section id="contact" className="text-center space-y-6 pt-8 border-t border-slate-800/80">
+        <section id="contact" className="text-center space-y-6 pt-8 border-t border-[var(--card-border)]">
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-              Mari Terhubung &amp; Berkolaborasi
+            <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
+              // 05. HANDSHAKE
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">
+              Initiate Collaboration
             </h2>
-            <p className="text-sm text-slate-400 max-w-md mx-auto">
-              Tertarik mendiskusikan proyek aplikasi mobile, web modern, atau peluang kolaborasi akademik? Pintu selalu terbuka.
+            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+              Open for software engineering roles, mobile architecture projects, and high-impact technical initiatives.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3 font-mono">
             <a
-              href="mailto:muslimgunawan@example.com"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-400 text-slate-950 font-bold text-sm hover:bg-cyan-300 transition-all shadow-md shadow-cyan-500/20"
+              href="mailto:musgun.slyr@gmail.com"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-bold text-sm hover:bg-cyan-400 transition-all shadow-md shadow-cyan-500/20"
             >
               <Mail className="w-4 h-4" />
-              <span>Email Saya</span>
+              <span>musgun.slyr@gmail.com</span>
             </a>
             <a
               href="https://github.com/MuslimGunawan"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-medium text-sm hover:bg-slate-800 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-white font-medium text-sm hover:bg-slate-300 dark:hover:bg-slate-800 transition-all"
             >
               <GithubIcon className="w-4 h-4" />
-              <span>GitHub Profile</span>
+              <span>github.com/MuslimGunawan</span>
             </a>
           </div>
 
-          <footer className="pt-12 text-xs text-slate-500 space-y-1 select-none">
+          <footer className="pt-12 text-xs text-slate-500 space-y-1 select-none font-mono">
             <p>© 2026 Muslim Gunawan. All rights reserved.</p>
-            <p className="text-slate-600">Teknik Informatika • Universitas Malikussaleh</p>
+            <p className="text-slate-600">Teknik Informatika // Universitas Malikussaleh</p>
           </footer>
         </section>
       </main>
