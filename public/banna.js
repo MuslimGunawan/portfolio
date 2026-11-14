@@ -224,6 +224,7 @@
     const { tasks, byEl } = collect()
     tasks.forEach((t) => t.el.classList.add('sb-wait'))
     root.classList.remove('sb-pending')
+    root.classList.remove('sb-loading')
     if (!tasks.length) return
 
     const host = document.createElement('div')
@@ -674,10 +675,12 @@
     }
 
     function skip() {
+      root.classList.remove('sb-loading')
       tasks.forEach(finish)
       stop()
     }
     function stop() {
+      root.classList.remove('sb-loading')
       if (stopped) return
       stopped = true
       tasks.forEach(finish)
@@ -709,23 +712,24 @@
 
   window.Banna = {
     start() {
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        root.classList.remove('sb-loading')
+        return
+      }
       try {
         sessionStorage.removeItem('banna-seen')
       } catch {}
       addStyles(document, PAGE_CSS)
       if (current) current.stop()
       document.querySelectorAll('#sb-host').forEach((h) => h.remove())
-      document.querySelectorAll('.sb-wait').forEach((el) => el.classList.remove('sb-wait'))
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      setTimeout(() => {
-        start()
-      }, 100)
+      start()
     },
     skip() {
+      root.classList.remove('sb-loading')
       if (current) current.skip()
     },
     stop() {
+      root.classList.remove('sb-loading')
       if (current) current.stop()
     },
   }

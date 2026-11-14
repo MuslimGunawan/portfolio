@@ -107,7 +107,7 @@ export default function Home() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (window as any).Banna.start();
       }
-    }, 150);
+    }, 30);
 
     return () => clearTimeout(bannaTimer);
   }, []);
@@ -470,7 +470,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Logo / Brand Name Bersih */}
           <a href="#" className="flex flex-col group">
-            <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors font-mono">
+            <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors font-display">
               Muslim Gunawan
             </span>
             <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 tracking-wider">
@@ -604,7 +604,7 @@ export default function Home() {
                 <span className="text-cyan-600 dark:text-cyan-400 font-bold">Semester 5</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12] font-display">
                 Engineering Scalable{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-sky-500 to-blue-600 dark:from-cyan-400 dark:via-sky-400 dark:to-blue-500">
                   Mobile &amp; Fullstack
@@ -705,7 +705,7 @@ export default function Home() {
                   {/* Ringkasan Profil Card */}
                   <div className="space-y-1.5 px-1 font-mono">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-slate-900 dark:text-white">Muslim Gunawan</span>
+                      <span className="text-sm font-bold text-slate-900 dark:text-white font-display">Muslim Gunawan</span>
                       <span className="px-2 py-0.5 text-[10px] rounded-full bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800/60 font-bold">
                         240170036
                       </span>
@@ -726,11 +726,11 @@ export default function Home() {
             <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
               // 01. CAPABILITIES
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-mono">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-display">
               <Layers className="w-6 h-6 text-cyan-500" />
               <span>Core Domains &amp; Foundation</span>
             </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
+            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-2xl font-sans">
               Kompetensi teknik terintegrasi dari kurikulum Teknik Informatika UNIMAL dan praktik rekayasa sistem modern.
             </p>
           </div>
@@ -741,8 +741,8 @@ export default function Home() {
               <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400 mb-5 group-hover:scale-110 transition-transform">
                 <Smartphone className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-mono">Mobile App Engineering</h3>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-display">Mobile App Engineering</h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
                 Pengembangan aplikasi multi-platform (Android, Web) menggunakan Flutter dan Dart dengan arsitektur bersih, 60fps UI, state management, dan interaksi native yang halus.
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5 font-mono">
@@ -757,8 +757,8 @@ export default function Home() {
               <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-5 group-hover:scale-110 transition-transform">
                 <Globe className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-mono">Fullstack Web Systems</h3>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-display">Fullstack Web Systems</h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
                 Merancang backend API yang aman &amp; tangguh menggunakan PHP 8.5 &amp; Laravel, serta antarmuka web modern reaktif berbasis Next.js 16, TypeScript, dan Tailwind CSS.
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5 font-mono">
@@ -773,8 +773,8 @@ export default function Home() {
               <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-5 group-hover:scale-110 transition-transform">
                 <Database className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-mono">Data Science &amp; GIS</h3>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-display">Data Science &amp; GIS</h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
                 Eksplorasi data spasial, pemodelan statistik dengan R &amp; Python, serta analisis sistem informasi geografis (GIS) untuk digitasi batas wilayah dan infrastruktur dengan QGIS.
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5 font-mono">
@@ -792,11 +792,11 @@ export default function Home() {
             <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
               // 02. TOOLCHAIN_MATRIX
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-mono">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-display">
               <Cpu className="w-6 h-6 text-cyan-500" />
               <span>Technology Toolchain</span>
             </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
+            <p className="text-sm text-slate-600 dark:text-slate-400 font-sans">
               Perangkat dan bahasa pemrograman yang digunakan dalam implementasi solusi sistem.
             </p>
           </div>
@@ -841,11 +841,11 @@ export default function Home() {
               <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
                 // 03. REPOSITORIES
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-mono">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-display">
                 <Code2 className="w-6 h-6 text-cyan-500" />
                 <span>Featured Systems</span>
               </h2>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
+              <p className="text-sm text-slate-600 dark:text-slate-400 font-sans">
                 Pilih kartu proyek untuk membaca detail arsitektur, fitur, dan dokumentasi teknis.
               </p>
             </div>
@@ -883,9 +883,9 @@ export default function Home() {
                     <span className="text-xs text-slate-500 font-medium">{project.role}</span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors flex items-center justify-between font-mono">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors flex items-center justify-between font-display">
                     <span>{project.title}</span>
-                    <span className="text-xs text-cyan-600 dark:text-cyan-400 font-normal flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="text-xs text-cyan-600 dark:text-cyan-400 font-normal flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity font-mono">
                       <span>Inspect</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </span>
@@ -920,7 +920,7 @@ export default function Home() {
                   <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-200 dark:border-slate-700 font-mono">
                     {selectedProject.category}
                   </span>
-                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white pt-1 font-mono">
+                  <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white pt-1 font-display">
                     {selectedProject.title}
                   </h2>
                   <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">// Role: {selectedProject.role}</p>
@@ -1019,11 +1019,11 @@ export default function Home() {
             <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
               // 04. SHELL_ENVIRONMENT
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-mono">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-display">
               <TerminalIcon className="w-6 h-6 text-cyan-500" />
               <span>Interactive Developer Terminal</span>
             </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
+            <p className="text-sm text-slate-600 dark:text-slate-400 font-sans">
               Direct command-line session running on virtual POSIX emulator.
             </p>
           </div>
@@ -1101,10 +1101,10 @@ export default function Home() {
             <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
               // 05. HANDSHAKE
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-mono">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white font-display">
               Initiate Collaboration
             </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto font-sans">
               Open for software engineering roles, mobile architecture projects, and high-impact technical initiatives.
             </p>
           </div>

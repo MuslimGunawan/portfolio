@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono, Syne } from "next/font/google";
 import "./globals.css";
+
+const syne = Syne({
+  variable: "--font-syne",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["700", "800"],
+});
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -45,12 +52,18 @@ export default function RootLayout({
   return (
     <html lang="id" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        {/* Anti-flicker theme initialization script */}
+        {/* Anti-flicker theme & anti-FOUC zero-flash inline styles */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `html.sb-loading main { opacity: 0 !important; pointer-events: none; }`,
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
+                  document.documentElement.classList.add('sb-loading');
                   var saved = localStorage.getItem('musgun_theme');
                   var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                   if (saved === 'dark' || (!saved && prefersDark) || !saved) {
@@ -58,6 +71,10 @@ export default function RootLayout({
                   } else {
                     document.documentElement.classList.remove('dark');
                   }
+                  // Failsafe in case script loading is delayed
+                  setTimeout(function() {
+                    document.documentElement.classList.remove('sb-loading');
+                  }, 4000);
                 } catch(e) {}
               })();
             `,
@@ -74,7 +91,7 @@ export default function RootLayout({
         ></script>
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} min-h-screen antialiased transition-colors duration-300 selection:bg-cyan-500/30 selection:text-cyan-400`}
+        className={`${syne.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} min-h-screen antialiased transition-colors duration-300 selection:bg-cyan-500/30 selection:text-cyan-400`}
       >
         {children}
       </body>
