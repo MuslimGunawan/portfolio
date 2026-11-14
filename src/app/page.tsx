@@ -434,7 +434,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Logo / Brand Name Bersih */}
           <a href="#" className="flex flex-col group">
-            <span className="font-extrabold text-lg sm:text-xl tracking-tight text-[var(--foreground)] group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors font-mono">
+            <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors font-mono">
               Muslim Gunawan
             </span>
             <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 tracking-wider">
@@ -444,19 +444,19 @@ export default function Home() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-300 font-mono">
-            <a href="#about" className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors">
+            <a href="#about" className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
               // tentang
             </a>
-            <a href="#stack" className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors">
+            <a href="#stack" className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
               // tech_stack
             </a>
-            <a href="#projects" className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors">
+            <a href="#projects" className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
               // proyek
             </a>
-            <a href="#terminal" className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors">
+            <a href="#terminal" className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
               // terminal
             </a>
-            <a href="#contact" className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors">
+            <a href="#contact" className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
               // kontak
             </a>
           </nav>
@@ -466,7 +466,7 @@ export default function Home() {
             {/* Theme Toggle (Dark / Light) */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-800 transition-all text-xs"
+              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-all text-xs"
               title={isDarkTheme ? "Switch to Light Mode" : "Switch to Dark Mode"}
               aria-label="Toggle Theme"
             >
@@ -476,7 +476,7 @@ export default function Home() {
             {/* Admin Dashboard Lock Link */}
             <Link
               href="/admin"
-              className="p-2 rounded-xl text-slate-500 hover:text-cyan-400 hover:bg-slate-200 dark:hover:bg-slate-900 border border-transparent hover:border-slate-300 dark:hover:border-slate-800 transition-all text-xs"
+              className="p-2 rounded-xl text-slate-500 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-900 border border-transparent hover:border-slate-200 dark:hover:border-slate-800 transition-all text-xs"
               title="Admin Terminal"
             >
               <Lock className="w-4 h-4" />
@@ -492,7 +492,7 @@ export default function Home() {
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+              className="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
               aria-label="Toggle Mobile Menu"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -502,7 +502,7 @@ export default function Home() {
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden pt-4 pb-2 border-t border-[var(--card-border)] mt-3 space-y-2 text-sm font-mono">
+          <div className="md:hidden pt-4 pb-2 border-t border-slate-200 dark:border-slate-800 mt-3 space-y-2 text-sm font-mono">
             <a
               href="#about"
               onClick={() => setMobileMenuOpen(false)}
@@ -548,26 +548,26 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Kiri: Teks & Headline */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-200/80 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700/70 text-slate-700 dark:text-slate-300 text-xs font-mono">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/70 text-slate-700 dark:text-slate-300 text-xs font-mono shadow-xs">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>Teknik Informatika // Universitas Malikussaleh</span>
                 <span className="text-slate-400">|</span>
                 <span className="text-cyan-600 dark:text-cyan-400 font-bold">Semester 5</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[var(--foreground)] leading-[1.12]">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
                 Engineering Scalable{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-600">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-sky-500 to-blue-600 dark:from-cyan-400 dark:via-sky-400 dark:to-blue-500">
                   Mobile &amp; Fullstack
                 </span>{" "}
                 Architectures.
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
-                Halo, saya <strong className="text-[var(--foreground)]">Muslim Gunawan</strong> (MusGun). 
+              <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed max-w-xl">
+                Halo, saya <strong className="text-slate-900 dark:text-white font-bold">Muslim Gunawan</strong> (MusGun). 
                 Mahasiswa Teknik Informatika UNIMAL yang berdedikasi membangun aplikasi mobile performa tinggi dengan{" "}
-                <strong className="text-cyan-600 dark:text-cyan-300 font-mono">Flutter</strong>, sistem web terukur dengan{" "}
-                <strong className="text-blue-600 dark:text-sky-300 font-mono">Laravel &amp; Next.js</strong>, serta visualisasi analitik geospasial.
+                <strong className="text-cyan-700 dark:text-cyan-300 font-mono font-bold">Flutter</strong>, sistem web terukur dengan{" "}
+                <strong className="text-blue-700 dark:text-sky-300 font-mono font-bold">Laravel &amp; Next.js</strong>, serta visualisasi analitik geospasial.
               </p>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -583,7 +583,7 @@ export default function Home() {
                   href="https://github.com/MuslimGunawan"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-200 dark:bg-slate-900/80 hover:bg-slate-300 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700/80 text-slate-800 dark:text-slate-200 font-medium text-sm transition-all font-mono"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-slate-900/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/80 text-slate-800 dark:text-slate-200 font-medium text-sm transition-all shadow-xs font-mono"
                 >
                   <GithubIcon className="w-4 h-4" />
                   <span>GitHub</span>
@@ -591,7 +591,7 @@ export default function Home() {
 
                 <a
                   href="#terminal"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-200 dark:bg-slate-900/80 hover:bg-slate-300 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700/80 text-slate-800 dark:text-slate-200 font-medium text-sm transition-all font-mono"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-slate-900/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/80 text-slate-800 dark:text-slate-200 font-medium text-sm transition-all shadow-xs font-mono"
                 >
                   <TerminalIcon className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                   <span>Terminal</span>
@@ -599,7 +599,7 @@ export default function Home() {
               </div>
 
               {/* Status info bar */}
-              <div className="flex flex-wrap items-center gap-6 pt-4 text-xs text-slate-500 dark:text-slate-400 border-t border-[var(--card-border)] font-mono">
+              <div className="flex flex-wrap items-center gap-6 pt-4 text-xs text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-white/10 font-mono">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-3.5 h-3.5 text-rose-500" />
                   <span>Lhokseumawe / Aceh, ID</span>
@@ -618,11 +618,11 @@ export default function Home() {
             {/* Kanan: Foto Profil & Kartu Identitas */}
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative group w-full max-w-[340px]">
-                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 opacity-30 dark:opacity-40 blur-xl group-hover:opacity-60 transition duration-500" />
+                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 opacity-20 dark:opacity-40 blur-xl group-hover:opacity-40 dark:group-hover:opacity-60 transition duration-500" />
 
-                <div className="relative rounded-3xl p-4 glass-card shadow-2xl space-y-4">
+                <div className="relative rounded-3xl p-4 bg-white/95 dark:bg-[#0d1424]/90 border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl space-y-4">
                   {/* Foto Utama */}
-                  <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-700/60 bg-slate-100 dark:bg-slate-900">
+                  <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700/60 bg-slate-100 dark:bg-slate-900">
                     <Image
                       src="/pp.jpeg"
                       alt="Muslim Gunawan"
@@ -632,7 +632,7 @@ export default function Home() {
                       className="object-cover object-top transition duration-500 group-hover:scale-105"
                     />
                     {/* Badge UNIMAL di dalam foto */}
-                    <div className="absolute bottom-3 left-3 right-3 p-2.5 rounded-xl backdrop-blur-md bg-slate-950/85 border border-slate-700/60 flex items-center gap-3">
+                    <div className="absolute bottom-3 left-3 right-3 p-2.5 rounded-xl backdrop-blur-md bg-slate-950/85 border border-white/15 flex items-center gap-3">
                       <div className="relative w-7 h-7 flex-shrink-0">
                         <Image
                           src="/logo_unimal.png"
@@ -656,12 +656,12 @@ export default function Home() {
                   {/* Ringkasan Profil Card */}
                   <div className="space-y-1.5 px-1 font-mono">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-[var(--foreground)]">Muslim Gunawan</span>
+                      <span className="text-sm font-bold text-slate-900 dark:text-white">Muslim Gunawan</span>
                       <span className="px-2 py-0.5 text-[10px] rounded-full bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800/60 font-bold">
                         240170036
                       </span>
                     </div>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-sans">
+                    <p className="text-xs text-slate-600 dark:text-slate-400 font-sans leading-relaxed">
                       Software engineering practitioner focused on high-efficiency mobile apps &amp; modern web distributed systems.
                     </p>
                   </div>
@@ -677,7 +677,7 @@ export default function Home() {
             <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
               // 01. CAPABILITIES
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--foreground)] flex items-center gap-2.5 font-mono">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-mono">
               <Layers className="w-6 h-6 text-cyan-500" />
               <span>Core Domains &amp; Foundation</span>
             </h2>
@@ -688,50 +688,50 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {/* Bento Card 1: Mobile Development */}
-            <div className="glass-card rounded-2xl p-6 relative overflow-hidden group">
-              <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-500 dark:text-cyan-400 mb-5 group-hover:scale-110 transition-transform">
+            <div className="glass-card rounded-2xl p-6 relative overflow-hidden group bg-white/95 dark:bg-[#0c1220]/80 border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-md hover:border-cyan-500/50 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400 mb-5 group-hover:scale-110 transition-transform">
                 <Smartphone className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-[var(--foreground)] mb-2 font-mono">Mobile App Engineering</h3>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-mono">Mobile App Engineering</h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 Pengembangan aplikasi multi-platform (Android, Web) menggunakan Flutter dan Dart dengan arsitektur bersih, 60fps UI, state management, dan interaksi native yang halus.
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5 font-mono">
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-700">Flutter</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-700">Dart</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-700">Riverpod</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-200 dark:border-slate-700">Flutter</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-200 dark:border-slate-700">Dart</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-200 dark:border-slate-700">Riverpod</span>
               </div>
             </div>
 
             {/* Bento Card 2: Fullstack Web */}
-            <div className="glass-card rounded-2xl p-6 relative overflow-hidden group">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-500 dark:text-blue-400 mb-5 group-hover:scale-110 transition-transform">
+            <div className="glass-card rounded-2xl p-6 relative overflow-hidden group bg-white/95 dark:bg-[#0c1220]/80 border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-md hover:border-blue-500/50 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-5 group-hover:scale-110 transition-transform">
                 <Globe className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-[var(--foreground)] mb-2 font-mono">Fullstack Web Systems</h3>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-mono">Fullstack Web Systems</h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 Merancang backend API yang aman &amp; tangguh menggunakan PHP 8.5 &amp; Laravel, serta antarmuka web modern reaktif berbasis Next.js 16, TypeScript, dan Tailwind CSS.
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5 font-mono">
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-blue-700 dark:text-blue-300 border border-slate-300 dark:border-slate-700">Laravel</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-blue-700 dark:text-blue-300 border border-slate-300 dark:border-slate-700">Next.js 16</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-blue-700 dark:text-blue-300 border border-slate-300 dark:border-slate-700">MySQL</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-blue-700 dark:text-blue-300 border border-slate-200 dark:border-slate-700">Laravel</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-blue-700 dark:text-blue-300 border border-slate-200 dark:border-slate-700">Next.js 16</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-blue-700 dark:text-blue-300 border border-slate-200 dark:border-slate-700">MySQL</span>
               </div>
             </div>
 
             {/* Bento Card 3: Data & Spatial */}
-            <div className="glass-card rounded-2xl p-6 relative overflow-hidden group">
-              <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-500 dark:text-purple-400 mb-5 group-hover:scale-110 transition-transform">
+            <div className="glass-card rounded-2xl p-6 relative overflow-hidden group bg-white/95 dark:bg-[#0c1220]/80 border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-md hover:border-purple-500/50 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-5 group-hover:scale-110 transition-transform">
                 <Database className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-[var(--foreground)] mb-2 font-mono">Data Science &amp; GIS</h3>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-mono">Data Science &amp; GIS</h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 Eksplorasi data spasial, pemodelan statistik dengan R &amp; Python, serta analisis sistem informasi geografis (GIS) untuk digitasi batas wilayah dan infrastruktur dengan QGIS.
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5 font-mono">
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-slate-300 dark:border-slate-700">Python</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-slate-300 dark:border-slate-700">R Language</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-slate-300 dark:border-slate-700">QGIS</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-slate-200 dark:border-slate-700">Python</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-slate-200 dark:border-slate-700">R Language</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-purple-700 dark:text-purple-300 border border-slate-200 dark:border-slate-700">QGIS</span>
               </div>
             </div>
           </div>
@@ -743,7 +743,7 @@ export default function Home() {
             <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
               // 02. TOOLCHAIN_MATRIX
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--foreground)] flex items-center gap-2.5 font-mono">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-mono">
               <Cpu className="w-6 h-6 text-cyan-500" />
               <span>Technology Toolchain</span>
             </h2>
@@ -769,14 +769,14 @@ export default function Home() {
             ].map((tech) => (
               <div
                 key={tech.name}
-                className="glass-card rounded-xl p-4 flex flex-col justify-between group"
+                className="glass-card rounded-xl p-4 flex flex-col justify-between group bg-white/90 dark:bg-[#0c1220]/75 border border-slate-200 dark:border-white/10 shadow-xs hover:border-cyan-500/40 transition-all"
               >
                 <div>
                   <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${tech.color} mb-3`} />
-                  <p className="font-bold text-sm text-[var(--foreground)] font-mono">{tech.name}</p>
+                  <p className="font-bold text-sm text-slate-900 dark:text-white font-mono">{tech.name}</p>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{tech.role}</p>
                 </div>
-                <div className="mt-3 pt-2 border-t border-[var(--card-border)] flex items-center justify-between text-[10px] text-slate-500 font-mono">
+                <div className="mt-3 pt-2 border-t border-slate-200 dark:border-white/10 flex items-center justify-between text-[10px] text-slate-500 font-mono">
                   <span>TIER</span>
                   <span className="text-cyan-600 dark:text-cyan-400 font-bold">{tech.level}</span>
                 </div>
@@ -792,7 +792,7 @@ export default function Home() {
               <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
                 // 03. REPOSITORIES
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--foreground)] flex items-center gap-2.5 font-mono">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-mono">
                 <Code2 className="w-6 h-6 text-cyan-500" />
                 <span>Featured Systems</span>
               </h2>
@@ -802,15 +802,15 @@ export default function Home() {
             </div>
 
             {/* Filter buttons */}
-            <div className="flex flex-wrap gap-1.5 p-1 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 font-mono">
+            <div className="flex flex-wrap gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-mono shadow-xs">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
                   className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
                     activeCategory === cat
-                      ? "bg-cyan-500 text-slate-950 font-bold shadow-sm"
-                      : "text-slate-600 dark:text-slate-400 hover:text-[var(--foreground)]"
+                      ? "bg-cyan-500 text-slate-950 font-bold shadow-xs"
+                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   {cat}
@@ -824,17 +824,17 @@ export default function Home() {
               <div
                 key={project.id}
                 onClick={() => setSelectedProject(project)}
-                className="glass-card rounded-2xl p-6 cursor-pointer flex flex-col justify-between group space-y-4 relative"
+                className="glass-card rounded-2xl p-6 cursor-pointer flex flex-col justify-between group space-y-4 relative bg-white/95 dark:bg-[#0c1220]/80 border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-md hover:border-cyan-500/50 transition-all"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between font-mono">
-                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-200 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-700">
+                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-200 dark:border-slate-700">
                       {project.category}
                     </span>
-                    <span className="text-xs text-slate-500">{project.role}</span>
+                    <span className="text-xs text-slate-500 font-medium">{project.role}</span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[var(--foreground)] group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors flex items-center justify-between font-mono">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors flex items-center justify-between font-mono">
                     <span>{project.title}</span>
                     <span className="text-xs text-cyan-600 dark:text-cyan-400 font-normal flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <span>Inspect</span>
@@ -847,7 +847,7 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[var(--card-border)] flex flex-wrap gap-1.5 font-mono">
+                <div className="pt-4 border-t border-slate-200 dark:border-white/10 flex flex-wrap gap-1.5 font-mono">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
@@ -864,31 +864,31 @@ export default function Home() {
 
         {/* MODAL DETAIL PROYEK INTERAKTIF */}
         {selectedProject && (
-          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-            <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6 my-8 relative">
-              <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-800">
+          <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+            <div className="w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6 my-8 relative">
+              <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
                 <div className="space-y-1">
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-800 text-cyan-300 border border-slate-700 font-mono">
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-cyan-700 dark:text-cyan-300 border border-slate-200 dark:border-slate-700 font-mono">
                     {selectedProject.category}
                   </span>
-                  <h2 className="text-2xl font-bold text-white pt-1 font-mono">
+                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white pt-1 font-mono">
                     {selectedProject.title}
                   </h2>
-                  <p className="text-xs text-slate-400 font-mono">// Role: {selectedProject.role}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">// Role: {selectedProject.role}</p>
                 </div>
 
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white transition-all"
+                  className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all"
                   title="Close"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+              <div className="space-y-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-sans">
                 <div>
-                  <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5 font-mono">
+                  <h4 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5 font-mono">
                     // OVERVIEW
                   </h4>
                   <p>{selectedProject.fullDescription || selectedProject.shortDescription}</p>
@@ -896,13 +896,13 @@ export default function Home() {
 
                 {selectedProject.features && selectedProject.features.length > 0 && (
                   <div>
-                    <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 font-mono">
+                    <h4 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 font-mono">
                       // KEY_SPECIFICATIONS
                     </h4>
-                    <ul className="space-y-1.5 font-mono text-xs">
+                    <ul className="space-y-1.5 font-mono text-xs text-slate-700 dark:text-slate-300">
                       {selectedProject.features.map((feat, idx) => (
                         <li key={idx} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400 flex-shrink-0 mt-0.5" />
                           <span>{feat}</span>
                         </li>
                       ))}
@@ -911,14 +911,14 @@ export default function Home() {
                 )}
 
                 <div>
-                  <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 font-mono">
+                  <h4 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 font-mono">
                     // STACK_DEPENDENCIES
                   </h4>
                   <div className="flex flex-wrap gap-1.5">
                     {selectedProject.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-950 text-cyan-300 border border-slate-800"
+                        className="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-950 text-cyan-700 dark:text-cyan-300 border border-slate-200 dark:border-slate-800"
                       >
                         {tag}
                       </span>
@@ -927,14 +927,14 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 font-mono">
+              <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 font-mono">
                 <div className="flex items-center gap-2">
                   {selectedProject.githubUrl && (
                     <a
                       href={selectedProject.githubUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs transition-all border border-slate-700"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-medium text-xs transition-all border border-slate-200 dark:border-slate-700"
                     >
                       <GithubIcon className="w-4 h-4" />
                       <span>View Source</span>
@@ -955,7 +955,7 @@ export default function Home() {
 
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs"
+                  className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-xs"
                 >
                   Dismiss
                 </button>
@@ -970,7 +970,7 @@ export default function Home() {
             <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
               // 04. SHELL_ENVIRONMENT
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--foreground)] flex items-center gap-2.5 font-mono">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5 font-mono">
               <TerminalIcon className="w-6 h-6 text-cyan-500" />
               <span>Interactive Developer Terminal</span>
             </h2>
@@ -981,7 +981,7 @@ export default function Home() {
 
           <div
             onClick={() => inputRef.current?.focus()}
-            className="rounded-2xl border border-[var(--terminal-border)] bg-[var(--terminal-bg)] shadow-2xl overflow-hidden font-mono text-xs sm:text-sm transition-all focus-within:border-cyan-500/60"
+            className="rounded-2xl border border-slate-300 dark:border-white/10 bg-[#090d16] shadow-xl dark:shadow-2xl overflow-hidden font-mono text-xs sm:text-sm transition-all focus-within:border-cyan-500/60"
           >
             {/* Terminal Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-black/40 border-b border-white/5 text-slate-400 select-none">
@@ -1021,6 +1021,8 @@ export default function Home() {
               </span>
               <input
                 ref={inputRef}
+                id="terminal-cli-input"
+                name="terminal_input"
                 type="text"
                 value={terminalInput}
                 onChange={(e) => setTerminalInput(e.target.value)}
@@ -1045,12 +1047,12 @@ export default function Home() {
         </section>
 
         {/* KONTAK & FOOTER BERSIH */}
-        <section id="contact" className="text-center space-y-6 pt-8 border-t border-[var(--card-border)]">
+        <section id="contact" className="text-center space-y-6 pt-8 border-t border-slate-200 dark:border-white/10">
           <div className="space-y-2">
             <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 tracking-wider uppercase font-bold">
               // 05. HANDSHAKE
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-mono">
               Initiate Collaboration
             </h2>
             <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
@@ -1070,7 +1072,7 @@ export default function Home() {
               href="https://github.com/MuslimGunawan"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-white font-medium text-sm hover:bg-slate-300 dark:hover:bg-slate-800 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white font-medium text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-all shadow-xs"
             >
               <GithubIcon className="w-4 h-4" />
               <span>github.com/MuslimGunawan</span>
@@ -1079,7 +1081,7 @@ export default function Home() {
 
           <footer className="pt-12 text-xs text-slate-500 space-y-1 select-none font-mono">
             <p>© 2026 Muslim Gunawan. All rights reserved.</p>
-            <p className="text-slate-600">Teknik Informatika // Universitas Malikussaleh</p>
+            <p className="text-slate-600 dark:text-slate-400">Teknik Informatika // Universitas Malikussaleh</p>
           </footer>
         </section>
       </main>

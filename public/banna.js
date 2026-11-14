@@ -687,6 +687,12 @@
       console.warn('banna stopped:', err)
     }
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', begin, { once: true })
-  else begin()
+  const scheduleBegin = () => {
+    // Wait brief tick so React finishes hydration cleanly without class mismatch
+    setTimeout(() => {
+      begin()
+    }, 120)
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scheduleBegin, { once: true })
+  else scheduleBegin()
 })()
