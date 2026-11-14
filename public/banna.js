@@ -630,8 +630,6 @@
         }
 
         // Selesaikan secara alami tanpa buru-buru
-        const allDone = built >= tasks.length
-
         const idle = now - lastActivity
         const allDone = built >= tasks.length
 

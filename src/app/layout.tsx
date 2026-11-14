@@ -66,6 +66,7 @@ export default function RootLayout({
         {/* Production-ready banna.js script */}
         <script
           src="/banna.js"
+          data-auto="false"
           data-speed="0.85"
           data-agents="7"
           data-credit="false"

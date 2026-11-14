@@ -96,10 +96,20 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [mobileMenuOpen]);
 
-  // Theme Sync on Mount
+  // Theme Sync on Mount & Trigger Agentic Builder cleanly after hydration
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
     setIsDarkTheme(isDark);
+
+    const bannaTimer = setTimeout(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (typeof window !== "undefined" && (window as any).Banna) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (window as any).Banna.start();
+      }
+    }, 150);
+
+    return () => clearTimeout(bannaTimer);
   }, []);
 
   const toggleTheme = () => {
