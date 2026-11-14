@@ -71,6 +71,30 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isNavVisible, setIsNavVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  // Smart Sticky Navbar: Hide on scroll down, reveal on scroll up
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY < 25) {
+        setIsNavVisible(true);
+      } else if (currentScrollY > lastScrollY.current + 8) {
+        // Scroll ke bawah: sembunyikan navbar jika mobile menu tidak sedang terbuka
+        if (!mobileMenuOpen) {
+          setIsNavVisible(false);
+        }
+      } else if (currentScrollY < lastScrollY.current - 6) {
+        // Scroll sedikit ke atas: tampilkan kembali navbar seketika!
+        setIsNavVisible(true);
+      }
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [mobileMenuOpen]);
 
   // Theme Sync on Mount
   useEffect(() => {
@@ -426,10 +450,12 @@ export default function Home() {
       {/* Background radial glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-gradient-to-b from-cyan-500/15 via-blue-600/10 to-transparent blur-[120px] pointer-events-none" />
 
-      {/* MINIMALIST TOP BAR NAVIGATION (Clean & Hacker-Grade) */}
+      {/* MINIMALIST TOP BAR NAVIGATION (Clean, Smart Sticky & Floating Overlay) */}
       <header
         data-banna-skip
-        className="sticky top-0 z-40 backdrop-blur-md bg-[var(--header-bg)] border-b border-[var(--card-border)] px-6 py-3.5 transition-colors"
+        className={`sticky top-0 z-40 backdrop-blur-md bg-[var(--header-bg)] border-b border-slate-200 dark:border-white/10 px-6 py-3.5 transition-transform duration-300 ${
+          isNavVisible ? "translate-y-0" : "-translate-y-full"
+        }`}
       >
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Logo / Brand Name Bersih */}
@@ -492,53 +518,66 @@ export default function Home() {
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+              className="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               aria-label="Toggle Mobile Menu"
             >
-              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              {mobileMenuOpen ? <X className="w-4 h-4 text-rose-500" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Dropdown Menu: TRUE FLOATING OVERLAY (TIDAK MENDORONG CONTENT BODY) */}
         {mobileMenuOpen && (
-          <div className="md:hidden pt-4 pb-2 border-t border-slate-200 dark:border-slate-800 mt-3 space-y-2 text-sm font-mono">
-            <a
-              href="#about"
+          <>
+            {/* Backdrop Transparan Blur */}
+            <div
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
-            >
-              // tentang
-            </a>
-            <a
-              href="#stack"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
-            >
-              // tech_stack
-            </a>
-            <a
-              href="#projects"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
-            >
-              // proyek
-            </a>
-            <a
-              href="#terminal"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
-            >
-              // terminal
-            </a>
-            <a
-              href="#contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
-            >
-              // kontak
-            </a>
-          </div>
+              className="md:hidden fixed inset-0 top-[62px] bg-black/40 backdrop-blur-xs z-40 transition-opacity"
+            />
+            {/* Floating Menu Drawer Di Atas Body */}
+            <div className="md:hidden absolute top-full left-0 right-0 z-50 bg-white/95 dark:bg-[#070b14]/95 backdrop-blur-xl border-b border-slate-200 dark:border-white/10 shadow-2xl px-6 py-4 space-y-2 text-sm font-mono animate-in fade-in slide-in-from-top-2 duration-200">
+              <a
+                href="#about"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors"
+              >
+                <span>// tentang</span>
+                <ArrowRight className="w-3.5 h-3.5 text-cyan-500" />
+              </a>
+              <a
+                href="#stack"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors"
+              >
+                <span>// tech_stack</span>
+                <ArrowRight className="w-3.5 h-3.5 text-cyan-500" />
+              </a>
+              <a
+                href="#projects"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors"
+              >
+                <span>// proyek</span>
+                <ArrowRight className="w-3.5 h-3.5 text-cyan-500" />
+              </a>
+              <a
+                href="#terminal"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors"
+              >
+                <span>// terminal</span>
+                <ArrowRight className="w-3.5 h-3.5 text-cyan-500" />
+              </a>
+              <a
+                href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors"
+              >
+                <span>// kontak</span>
+                <ArrowRight className="w-3.5 h-3.5 text-cyan-500" />
+              </a>
+            </div>
+          </>
         )}
       </header>
 

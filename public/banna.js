@@ -47,7 +47,7 @@
     :host { all: initial; }
     .layer { position: fixed; inset: 0; z-index: 2147483646; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity .35s; }
     .layer.on { opacity: 1; }
-    .cursor { position: absolute; top: 0; left: 0; color: var(--c); will-change: transform; filter: drop-shadow(0 3px 6px rgb(0 0 0 / .65)); pointer-events: none; }
+    .cursor { position: absolute; top: 0; left: 0; color: var(--c); will-change: transform; filter: drop-shadow(0 4px 8px rgb(0 0 0 / .55)); pointer-events: none; }
     .cursor svg { display: block; transition: transform .1s; }
     .cursor.press svg { transform: scale(.72); }
     .cursor-tag {
@@ -56,24 +56,70 @@
       left: 14px;
       background: var(--c);
       color: #040814;
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
       font-size: 10px;
       font-weight: 800;
-      letter-spacing: 0.02em;
-      padding: 1.5px 7px;
+      letter-spacing: 0.03em;
+      padding: 2px 7px;
       border-radius: 999px;
       white-space: nowrap;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.6);
       user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
-    .box { position: absolute; top: 0; left: 0; box-sizing: border-box; border: 1px solid var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); transition: opacity .25s; }
+    .cursor-tag .sub-status {
+      font-size: 8.5px;
+      font-weight: 600;
+      opacity: 0.85;
+      padding-left: 2px;
+      border-left: 1px solid rgba(0,0,0,0.3);
+    }
+    .box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      box-sizing: border-box;
+      border: 1.5px dashed var(--c);
+      background: color-mix(in srgb, var(--c) 14%, transparent);
+      box-shadow: 0 0 15px color-mix(in srgb, var(--c) 25%, transparent);
+      transition: opacity .25s;
+    }
     .box.out { opacity: 0; }
-    .box i { position: absolute; width: 7px; height: 7px; background: #fff; border: 1px solid var(--c); }
-    .box i:first-of-type { top: -4px; left: -4px; }
-    .box i:last-of-type { bottom: -4px; right: -4px; }
-    .badge { position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); padding: 0 7px; border-radius: 5px; background: var(--c); color: #0B0F1E; font: 700 11px/1.6 system-ui, sans-serif; white-space: nowrap; }
-    .caret { position: absolute; top: 0; left: 0; width: 2px; background: var(--c); box-shadow: 0 0 8px var(--c); }
+    .box i {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      background: #ffffff;
+      border: 1.5px solid var(--c);
+      border-radius: 1px;
+    }
+    .box i.tl { top: -4px; left: -4px; }
+    .box i.tr { top: -4px; right: -4px; }
+    .box i.bl { bottom: -4px; left: -4px; }
+    .box i.br { bottom: -4px; right: -4px; }
+    .badge {
+      position: absolute;
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 1.5px 8px;
+      border-radius: 5px;
+      background: #090e17;
+      color: var(--c);
+      border: 1px solid var(--c);
+      font: 700 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .badge .dim { color: #ffffff; }
+    .badge .tag { color: var(--c); opacity: 0.9; }
+    .caret { position: absolute; top: 0; left: 0; width: 2px; background: var(--c); box-shadow: 0 0 10px var(--c); }
     .bar { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 2147483647; display: flex; align-items: center; gap: 12px; padding: 5px 6px 5px 16px; background: rgb(13 19 42 / .92); border: 1px solid rgb(255 255 255 / .16); border-radius: 999px; color: #F6F1E7; font: 14px/1.5 system-ui, sans-serif; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; }
     .bar.on { opacity: 1; visibility: visible; }
     .bar button { min-height: 36px; padding: 0 14px; background: none; border: 1px solid rgb(255 255 255 / .35); border-radius: 999px; color: inherit; font: inherit; font-weight: 700; cursor: pointer; }
@@ -268,23 +314,26 @@
       svg.append(path)
       el.append(svg)
 
+      let tag = null
       if (name) {
-        const tag = document.createElement('div')
+        tag = document.createElement('div')
         tag.className = 'cursor-tag'
         tag.textContent = name
         el.append(tag)
       }
 
       layer.append(el)
-      return el
+      return { el, tag }
     }
     const agents = Array.from({ length: Math.max(1, options.agents) }, (_, i) => {
       const angle = (i / options.agents) * Math.PI * 2
       const model = AI_MODELS[i % AI_MODELS.length]
       const color = model.color
       const name = model.name
+      const { el, tag } = makeCursor(color, name)
       return {
-        el: makeCursor(color, name),
+        el,
+        tagEl: tag,
         color,
         name,
         x: innerWidth / 2 + Math.cos(angle) * 70,
@@ -329,17 +378,35 @@
       yield* travel(a, () => {
         const r = el.getBoundingClientRect()
         return [startX(r), r.top]
-      }, 0.24)
+      }, 0.22)
+
+      const tagName = el.tagName.toLowerCase()
+      const tagClass = el.className && typeof el.className === 'string' ? el.className.split(' ').filter((c) => !c.startsWith('sb-') && c.length > 2)[0] : ''
+      const labelTag = tagClass ? `.${tagClass.slice(0, 12)}` : `<${tagName}>`
+
+      if (a.tagEl) {
+        a.tagEl.innerHTML = `${a.name} <span class="sub-status">${labelTag}</span>`
+      }
 
       const box = document.createElement('div')
       box.className = 'box'
       box.style.setProperty('--c', a.color)
-      box.append(document.createElement('i'), document.createElement('i'))
+
+      const iTL = document.createElement('i'); iTL.className = 'tl'
+      const iTR = document.createElement('i'); iTR.className = 'tr'
+      const iBL = document.createElement('i'); iBL.className = 'bl'
+      const iBR = document.createElement('i'); iBR.className = 'br'
+      box.append(iTL, iTR, iBL, iBR)
+
       const badge = document.createElement('span')
       badge.className = 'badge'
       box.append(badge)
       layer.append(box)
-      task.cleanup.push(() => box.remove())
+
+      task.cleanup.push(() => {
+        box.remove()
+        if (a.tagEl) a.tagEl.textContent = a.name
+      })
 
       const place = (k) => {
         const r = el.getBoundingClientRect()
@@ -348,22 +415,23 @@
         box.style.width = `${w}px`
         box.style.height = `${h}px`
         box.style.transform = `translate(${rtl ? r.right - w : r.left}px, ${r.top}px)`
-        badge.textContent = `${Math.round(w)} × ${Math.round(h)}`
+        badge.innerHTML = `<span class="dim">${Math.round(w)} × ${Math.round(h)}px</span> <span class="tag">${labelTag}</span>`
         a.x = startX(r) + (endX(r) - startX(r)) * k
         a.y = r.top + r.height * k
       }
       let t = 0
-      while (t < 0.34) {
+      while (t < 0.32) {
         t += (yield) * options.speed
-        place(ease(Math.min(1, t / 0.34)))
+        place(ease(Math.min(1, t / 0.32)))
       }
       el.classList.remove('sb-wait')
       box.classList.add('out')
       t = 0
-      while (t < 0.2) {
+      while (t < 0.16) {
         t += (yield) * options.speed
         place(1)
       }
+      if (a.tagEl) a.tagEl.textContent = a.name
     }
 
     // Typing is a moving clip over the real text. Nothing in the DOM changes, so joined
@@ -524,7 +592,18 @@
         for (let idx = 0; idx < agents.length; idx++) {
           const a = agents[idx]
           if (!a.script) {
-            const task = tasks.find((t) => t.state === 'queued' && (!t.parent || t.parent.state === 'done'))
+            // Prioritas 1: Elemen yang sedang berada di viewport layar saat ini
+            let task = tasks.find((t) => {
+              if (t.state !== 'queued') return false
+              if (t.parent && t.parent.state !== 'done') return false
+              const r = t.el.getBoundingClientRect()
+              return r.top >= -40 && r.top <= innerHeight + 60
+            })
+            // Prioritas 2: Task queued manapun
+            if (!task) {
+              task = tasks.find((t) => t.state === 'queued' && (!t.parent || t.parent.state === 'done'))
+            }
+
             if (task) {
               task.state = 'active'
               task.agent = a
@@ -572,6 +651,16 @@
           bar.classList.toggle('on', (waiting > 0 || now - lastActivity < 700) && built < tasks.length)
         }
 
+        // Cek jika user sudah mencapai ujung bawah halaman (terutama di HP/mobile)
+        const scrollBottom = window.innerHeight + window.scrollY
+        const docTotalHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+        const isAtPageBottom = scrollBottom >= (docTotalHeight - 100)
+
+        // Jika sampai di ujung bawah dan kursor tidak sedang menjalankan script, selesaikan seluruh sisa tasks
+        if (isAtPageBottom && !agents.some((a) => a.script)) {
+          tasks.forEach(finish)
+        }
+
         const idle = now - lastActivity
         const allDone = built >= tasks.length
 
@@ -585,8 +674,8 @@
             disperseStart = now
             for (let idx = 0; idx < agents.length; idx++) {
               const a = agents[idx]
-              const scatterAngle = (idx / agents.length) * Math.PI * 2 + (Math.random() * 0.3 - 0.15)
-              const speed = 1200 + Math.random() * 500
+              const scatterAngle = (idx / agents.length) * Math.PI * 2 + (Math.random() * 0.4 - 0.2)
+              const speed = 1400 + Math.random() * 500
               a.vx = Math.cos(scatterAngle) * speed
               a.vy = Math.sin(scatterAngle) * speed
             }
@@ -597,10 +686,10 @@
             a.x += (a.vx || 0) * dt
             a.y += (a.vy || 0) * dt
             a.el.style.transform = `translate(${a.x.toFixed(1)}px, ${a.y.toFixed(1)}px)`
-            a.el.style.opacity = String(Math.max(0, 1 - disperseElapsed * 1.5))
+            a.el.style.opacity = String(Math.max(0, 1 - disperseElapsed * 1.8))
           }
 
-          if (disperseElapsed > 0.75) {
+          if (disperseElapsed > 0.65) {
             document.dispatchEvent(new CustomEvent('banna:done'))
             stop()
             return
