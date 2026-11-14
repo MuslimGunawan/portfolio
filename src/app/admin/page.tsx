@@ -14,7 +14,6 @@ import {
   Save,
   RotateCw,
   ExternalLink,
-  Github,
   AlertCircle,
   Eye,
 } from "lucide-react";
