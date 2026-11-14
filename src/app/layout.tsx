@@ -43,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" suppressHydrationWarning className="scroll-smooth">
+    <html lang="id" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* Anti-flicker theme initialization script */}
         <script
