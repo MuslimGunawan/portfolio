@@ -1,0 +1,77 @@
+[
+  {
+    "id": "temu-kampus",
+    "title": "Temu Kampus",
+    "category": "Mobile",
+    "role": "Lead Mobile Developer",
+    "shortDescription": "Aplikasi mobile ekosistem mahasiswa berbasis Flutter & Dart untuk menghubungkan kegiatan kampus, forum akademik, dan integrasi direktori mahasiswa.",
+    "fullDescription": "Temu Kampus dirancang untuk memudahkan mahasiswa dalam mengakses informasi kegiatan kampus secara real-time, berdiskusi dalam forum akademik, serta menemukan direktori organisasi dan civitas akademika UNIMAL dengan tampilan antarmuka responsif dan performa tinggi 60 FPS.",
+    "features": [
+      "Otentikasi mahasiswa berbasis akun kampus UNIMAL",
+      "Feed kegiatan kampus & event organisasi real-time",
+      "Forum diskusi akademik per program studi",
+      "Push notification untuk jadwal perkuliahan & pengumuman penting",
+      "Arsitektur state management bersih (Riverpod/Provider)"
+    ],
+    "tags": ["Flutter", "Dart", "Android", "Cross-Platform", "Mobile UI"],
+    "githubUrl": "https://github.com/MuslimGunawan",
+    "demoUrl": "",
+    "featured": true
+  },
+  {
+    "id": "inventaris-unimal",
+    "title": "Sistem Inventaris Gudang UNIMAL",
+    "category": "Web",
+    "role": "Backend & Fullstack Developer",
+    "shortDescription": "Sistem enterprise manajemen logistik dan pelacakan aset inventaris kampus Universitas Malikussaleh dengan arsitektur RESTful API, audit log, dan otentikasi role-based.",
+    "fullDescription": "Sistem manajemen pergudangan internal terintegrasi untuk mendata aset laboratorium dan fakultas. Dilengkapi fitur pelacakan perpindahan barang, scan kode inventaris, persetujuan peminjaman barang, serta rekap laporan otomatis berformat PDF dan Excel.",
+    "features": [
+      "Role-Based Access Control (Admin Gudang, Dosen, Mahasiswa)",
+      "Pencatatan arus masuk dan keluar logistik kampus",
+      "Sistem persetujuan berjenjang untuk peminjaman aset",
+      "Audit trail log keamanan untuk setiap mutasi barang",
+      "Dashboard analitik stok minimum dan peringatan otomatis"
+    ],
+    "tags": ["Laravel", "PHP 8.5", "MySQL", "REST API", "Tailwind CSS"],
+    "githubUrl": "https://github.com/MuslimGunawan",
+    "demoUrl": "",
+    "featured": true
+  },
+  {
+    "id": "sig-lhokseumawe",
+    "title": "Analisis & Pemetaan Spasial Lhokseumawe",
+    "category": "Data & GIS",
+    "role": "Spatial Analyst",
+    "shortDescription": "Pengolahan dan visualisasi data geospasial distrik Banda Sakti & Lhokseumawe mencakup batas wilayah, jaringan transportasi, dan layer tematik lingkungan.",
+    "fullDescription": "Proyek Sistem Informasi Geografis (SIG) berbasis QGIS dan automasi scripting Python untuk menganalisis kepadatan infrastruktur, jaringan jalan, fasilitas publik, dan zonasi wilayah di kawasan Kota Lhokseumawe dan sekitarnya.",
+    "features": [
+      "Digitasi dan pembersihan data shapefile vektor (.shp / GeoJSON)",
+      "Analisis overlay spasial batas administrasi dan zona hijau",
+      "Pemetaan tematik jaringan transportasi dan fasilitas umum",
+      "Automasi pemrosesan data spasial dengan script Python"
+    ],
+    "tags": ["QGIS", "Python", "GeoJSON", "Spatial Analysis", "GIS"],
+    "githubUrl": "https://github.com/MuslimGunawan",
+    "demoUrl": "",
+    "featured": true
+  },
+  {
+    "id": "agentic-portfolio",
+    "title": "Agentic Developer Portfolio",
+    "category": "Web",
+    "role": "Frontend Architect",
+    "shortDescription": "Portofolio personal interaktif berbasis Next.js 16, TypeScript, dan Tailwind CSS v4 yang dilengkapi integrasi simulasi cursor builder banna.js dan terminal interaktif.",
+    "fullDescription": "Website portofolio utama dengan arsitektur modern Next.js 16 (App Router), mengusung konsep 'Agentic UI' dengan simulasi kursor AI interaktif yang merakit elemen web di depan pengunjung, dark theme futuristik, dan dashboard manajemen proyek terintegrasi.",
+    "features": [
+      "Simulasi kursor AI multi-agent kustom (Gemini, Claude, GPT, DeepSeek)",
+      "Terminal emulator realistis dengan perintah command-line asli",
+      "Dashboard admin CRUD terproteksi PIN untuk kelola proyek",
+      "Otomatisasi Git push & auto-deploy ke Vercel",
+      "Performa optimal, static generation, dan 100% responsif"
+    ],
+    "tags": ["Next.js 16", "TypeScript", "Tailwind CSS v4", "Banna.js", "Git Sync"],
+    "githubUrl": "https://github.com/MuslimGunawan",
+    "demoUrl": "http://localhost:3000",
+    "featured": true
+  }
+]
