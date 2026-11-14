@@ -72,24 +72,43 @@ export default function Home() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isNavVisible, setIsNavVisible] = useState(true);
-  const lastScrollY = useRef(0);
 
-  // Smart Sticky Navbar: Hide on scroll down, reveal on scroll up
+  // Smart Sticky Navbar: Hide on scroll down, instant reveal on scroll up
   useEffect(() => {
+    let lastY = window.scrollY;
+    let accumulatedUp = 0;
+    let accumulatedDown = 0;
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY < 25) {
+      const currentY = window.scrollY;
+      const diff = currentY - lastY;
+
+      // Di dekat puncak halaman, selalu tampilkan navbar
+      if (currentY <= 30) {
         setIsNavVisible(true);
-      } else if (currentScrollY > lastScrollY.current + 8) {
-        // Scroll ke bawah: sembunyikan navbar jika mobile menu tidak sedang terbuka
-        if (!mobileMenuOpen) {
+        accumulatedUp = 0;
+        accumulatedDown = 0;
+        lastY = currentY;
+        return;
+      }
+
+      if (diff > 0) {
+        // Scroll ke bawah: sembunyikan navbar jika menu mobile tidak terbuka
+        accumulatedDown += diff;
+        accumulatedUp = 0;
+        if (accumulatedDown > 12 && !mobileMenuOpen) {
           setIsNavVisible(false);
         }
-      } else if (currentScrollY < lastScrollY.current - 6) {
-        // Scroll sedikit ke atas: tampilkan kembali navbar seketika!
-        setIsNavVisible(true);
+      } else if (diff < 0) {
+        // Scroll ke atas: geser jempol sedikit ke atas (>= 5px akumulatif), langsung munculkan kembali!
+        accumulatedUp += Math.abs(diff);
+        accumulatedDown = 0;
+        if (accumulatedUp > 4) {
+          setIsNavVisible(true);
+        }
       }
-      lastScrollY.current = currentScrollY;
+
+      lastY = currentY;
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

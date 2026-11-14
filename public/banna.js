@@ -112,7 +112,23 @@
     .bar button:focus-visible, .bar a:focus-visible { outline: 3px solid #F5B942; outline-offset: 2px; }
     .bar a { color: #FFD27A; font-size: 12px; text-decoration: none; }
     .bar a:hover { text-decoration: underline; }
-    @media (max-width: 899px) { .bar { bottom: auto; top: 68px; gap: 8px; font-size: 12px; } .bar button { padding: 0 10px; } }
+    @media (max-width: 899px) {
+      .bar {
+        top: auto !important;
+        bottom: 16px !important;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 16px) !important;
+        gap: 8px;
+        font-size: 11.5px;
+        padding: 4px 6px 4px 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(12px);
+      }
+      .bar button {
+        min-height: 28px;
+        padding: 0 10px;
+        font-size: 11px;
+      }
+    }
     @media print { .layer, .bar { display: none; } }`
 
   // Constructable sheets keep working under a strict Content-Security-Policy.
